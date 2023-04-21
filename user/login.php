@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $myuser = mysqli_real_escape_string($db, $user);
   $mypass = mysqli_real_escape_string($db, $pass);
-  $sql = "SELECT * FROM users WHERE username = '$myuser' OR email='$myuser' and password = '$mypass'";
+  $sql = "SELECT * FROM users WHERE (username = '$myuser' OR email='$myuser') and userPassword = '$mypass' limit 1";
   $result = mysqli_query($db, $sql);
   $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
