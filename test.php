@@ -1,21 +1,25 @@
 <?php
-while($row = mysqli_fetch_assoc($result)){
-  $shortenedContent = substr(
-    strval($row['emailContent']), 
-    0,50);
-    echo (" <tr>
-    <td>
-      <div class=\"icheck-primary\">
-        <label for=\"check1\"></label>
+while($row = mysqli_fetch_assoc($productresult)){
+    echo (" <div class=\"list-group\">
+    <div class=\"list-group-item\">
+      <div class=\"row\">
+        <div class=\"col-auto\">
+          <img class=\"img-fluid\" src=\"../user/images/".$row['productImg']."\" alt=\"Photo\" style=\"max-height: 160px;\">
+        </div>
+        <div class=\"col px-4\">
+          <div>
+            <div class=\"float-right mt-5 flex-row\">
+              <a href=\"editservice.php?id=".$row['productID']."\" class=\"btn btn-primary\" role=\"button\">Edit</a>
+              <a href\"deletesql.php\" type=\"button\" class=\"btn btn-danger\">Delete</button>
+            </div>
+            <h3>".$row['productName']."</h3>
+            <p class=\"mb-3\">".$row['productShortDesc']."</p>
+            <h4 class=\"mb-2 mt-5\">₱".$row['productPrice']."<h4>
+          </div>
+        </div>
       </div>
-    </td>
-    <td class=\"mailbox-star\"><a href=\"markmsgasread.php\"><i class=\"fas fa-star text-warning\"></i></a></td>
-    <td class=\"mailbox-name\"><a href=\"read-mail.html\">Admin</a></td>
-    <td class=\"mailbox-subject\"><b>".$row['emailSubject']."</b> - ".$shortenedContent." ...
-    </td>
-    <td class=\"mailbox-attachment\"></td>
-    <td class=\"mailbox-date\">".$row['dateSent']."</td>
-  </tr>");
+    </div>
+  </div>");
 }
 ?>
 
