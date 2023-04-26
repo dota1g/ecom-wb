@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="css/style.css">
 
 </head>
-<?=
+<?php
 session_start();
 include("config.php");
 if (isset($_SESSION['login_user'])) {

@@ -17,24 +17,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css" />
 </head>
-<?=
+<?php
 session_start();
 include("config.php");
 if (isset($_SESSION['login_user'])) {
   $user = $_SESSION['login_user'];
-  $usersql = "SELECT * from users where username ='$user' or email = '$user' limit 1";
+  $usersql = "SELECT * from admins where username ='$user' or email = '$user' limit 1";
   $userResult = mysqli_query($db, $usersql);
   $userRow = mysqli_fetch_assoc($userResult);
-
-  $getUnreadMails = "SELECT * from email where userID=" . $userRow['userID'] . " AND didUserReadMsg = 0";
-  $resultxdd = mysqli_query($db, $getUnreadMails);
-  $unreadMailsCount = mysqli_num_rows($resultxdd);
 } else {
   header('Location:index.php');
 }
 
-$productsql = "SELECT * from products";
+$getAllMails = "SELECT * from email";
+$resultxdd = mysqli_query($db, $getAllMails);
+$mailCount = mysqli_num_rows($resultxdd);
+
+$productsql = "SELECT * from products where isProductAvailable = 1";
 $productresult = mysqli_query($db, $productsql);
+$productCount = mysqli_num_rows($productresult);
+
+$getAllUsers = "SELECT * from users";
+$resultusers = mysqli_query($db, $getAllUsers);
+$userCount = mysqli_num_rows($resultusers);
+
+$getAllOrders = "SELECT * from orders";
+$resultorders = mysqli_query($db, $getAllOrders);
+$orderCount = mysqli_num_rows($resultorders);
+
 ?>
 
 <body class="hold-transition sidebar-mini">
@@ -199,7 +209,7 @@ $productresult = mysqli_query($db, $productsql);
             <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" />
           </div>
           <div class="info">
-            <a href="msg-read" class="d-block">Admin</a>
+            <a href="msg-read" class="d-block">Hello, <?= $userRow['firstName']?></a>
           </div>
         </div>
 
@@ -308,7 +318,7 @@ $productresult = mysqli_query($db, $productsql);
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>1</h3>
+                  <h3><?= $orderCount?></h3>
 
                   <p>New Order(s)</p>
                 </div>
@@ -323,14 +333,14 @@ $productresult = mysqli_query($db, $productsql);
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>5<sup style="font-size: 20px"></sup></h3>
+                  <h3><?= $mailCount?><sup style="font-size: 20px"></sup></h3>
 
-                  <p>Unread Messages</p>
+                  <p>Messages</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="messages.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -338,9 +348,9 @@ $productresult = mysqli_query($db, $productsql);
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>44</h3>
+                  <h3><?= $productCount?></h3>
 
-                  <p>User Registrations</p>
+                  <p>Services Available</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-person-add"></i>
@@ -353,9 +363,9 @@ $productresult = mysqli_query($db, $productsql);
               <!-- small box -->
               <div class="small-box bg-danger">
                 <div class="inner">
-                  <h3>65</h3>
+                  <h3><?= $userCount ?></h3>
 
-                  <p>Unique Visitors</p>
+                  <p>User Registrations</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-pie-graph"></i>
