@@ -1,27 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>WB | Checkout</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+<head>
+  <title>WB | Checkout</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/magnific-popup.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
 
 
-    <link rel="stylesheet" href="css/aos.css">
+  <link rel="stylesheet" href="css/aos.css">
 
-    <link rel="stylesheet" href="css/style.css">
-    
-  </head>
-  <body>
-  
+  <link rel="stylesheet" href="css/style.css">
+  <?php
+  session_start();
+  include('config.php');
+  if (!isset($_SESSION['login_user'])){
+    header("Location:login.php");
+  } else {
+    $user = $_SESSION['login_user'];
+    $usersql = "SELECT * from users where username ='$user' or email = '$user' limit 1";
+    $userResult = mysqli_query($db, $usersql);
+    $userRow = mysqli_fetch_assoc($userResult);
+    $userID = $userRow['userID'];
+    $sql = "SELECT cartID, 
+                products.productName as productName,
+                products.productPrice as productPrice,
+                products.productImg as productImg,
+                users.username as username
+                from ((cart INNER JOIN users on cart.userID = users.userID)
+                      INNER JOIN products on cart.productID = products.productID)
+                      where users.userID = '$userID'";
+    $result = mysqli_query($db, $sql);
+  }
+
+  ?>
+</head>
+
+<body>
+
   <div class="site-wrap">
     <header class="site-navbar" role="banner">
       <div class="site-navbar-top">
@@ -54,15 +78,15 @@
                       <span class="icon icon-shopping_cart"></span>
                       <span class="count">2</span>
                     </a>
-                  </li> 
+                  </li>
                   <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
                 </ul>
-              </div> 
+              </div>
             </div>
 
           </div>
         </div>
-      </div> 
+      </div>
       <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
           <ul class="site-menu  d-none d-md-block">
@@ -122,15 +146,15 @@
               <div class="form-group">
                 <label for="c_country" class="text-black">Country <span class="text-danger">*</span></label>
                 <select id="c_country" class="form-control">
-                  <option value="1">Select a country</option>    
-                  <option value="2">Bangladesh</option>    
-                  <option value="3">Algeria</option>    
-                  <option value="4">Afghanistan</option>    
-                  <option value="5">Ghana</option>    
-                  <option value="6">Albania</option>    
-                  <option value="7">Bahrain</option>    
-                  <option value="8">Colombia</option>    
-                  <option value="9">Dominican Republic</option>    
+                  <option value="1">Select a country</option>
+                  <option value="2">Bangladesh</option>
+                  <option value="3">Algeria</option>
+                  <option value="4">Afghanistan</option>
+                  <option value="5">Ghana</option>
+                  <option value="6">Albania</option>
+                  <option value="7">Bahrain</option>
+                  <option value="8">Colombia</option>
+                  <option value="9">Dominican Republic</option>
                 </select>
               </div>
               <div class="form-group row">
@@ -206,15 +230,15 @@
                     <div class="form-group">
                       <label for="c_diff_country" class="text-black">Country <span class="text-danger">*</span></label>
                       <select id="c_diff_country" class="form-control">
-                        <option value="1">Select a country</option>    
-                        <option value="2">bangladesh</option>    
-                        <option value="3">Algeria</option>    
-                        <option value="4">Afghanistan</option>    
-                        <option value="5">Ghana</option>    
-                        <option value="6">Albania</option>    
-                        <option value="7">Bahrain</option>    
-                        <option value="8">Colombia</option>    
-                        <option value="9">Dominican Republic</option>    
+                        <option value="1">Select a country</option>
+                        <option value="2">bangladesh</option>
+                        <option value="3">Algeria</option>
+                        <option value="4">Afghanistan</option>
+                        <option value="5">Ghana</option>
+                        <option value="6">Albania</option>
+                        <option value="7">Bahrain</option>
+                        <option value="8">Colombia</option>
+                        <option value="9">Dominican Republic</option>
                       </select>
                     </div>
 
@@ -288,7 +312,7 @@
               <div class="col-md-12">
                 <h2 class="h3 mb-3 text-black">Coupon Code</h2>
                 <div class="p-3 p-lg-5 border">
-                  
+
                   <label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
                   <div class="input-group w-75">
                     <input type="text" class="form-control" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2">
@@ -300,7 +324,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="row mb-5">
               <div class="col-md-12">
                 <h2 class="h3 mb-3 text-black">Your Order</h2>
@@ -315,8 +339,8 @@
                         <td>Fan Art Commission <strong class="mx-2">x</strong> 1</td>
                         <td>₱149.00</td>
                       </tr>
-                        <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
-                        <td class="text-black">₱149.00</td>
+                      <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
+                      <td class="text-black">₱149.00</td>
                       </tr>
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
@@ -430,12 +454,15 @@
         <div class="row pt-5 mt-5 text-center">
           <div class="col-md-12">
             <p>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+              <script>
+                document.write(new Date().getFullYear());
+              </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>
-          
+
         </div>
       </div>
     </footer>
@@ -450,6 +477,7 @@
   <script src="js/aos.js"></script>
 
   <script src="js/main.js"></script>
-    
-  </body>
+
+</body>
+
 </html>

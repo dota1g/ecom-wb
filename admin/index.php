@@ -20,6 +20,41 @@
         background-size: cover;
     }
 </style>
+
+<?php
+session_start();
+include("config.php");
+$error = "";
+
+function test_input($data)
+{
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $user = test_input($_POST["user"]);
+  $pass = test_input($_POST["pass"]);
+
+  $myuser = mysqli_real_escape_string($db, $user);
+  $mypass = mysqli_real_escape_string($db, $pass);
+  $sql = "SELECT * FROM admins WHERE (username = '$myuser' OR email='$myuser') and adminPassword = '$mypass' limit 1";
+  $result = mysqli_query($db, $sql);
+  $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+  $count = mysqli_num_rows($result);
+
+  if ($count == 1) {
+    $_SESSION['login_user'] = $myuser;
+    header("location:starter.php");
+  } else {
+    $error = "Username or password is invalid";
+  }
+}
+?>
+
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
@@ -29,10 +64,11 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
+      <p class="text-center" style="color: red;"><?php echo $error; ?></p>
 
-      <form action="../../index3.html" method="post">
+      <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="text" class="form-control" placeholder="Username" name="user">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -40,7 +76,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" placeholder="Password" name="pass">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>

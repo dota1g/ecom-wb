@@ -82,6 +82,11 @@ $productresult = mysqli_query($db, $productsql);
                       <span class=\"count\">2</span>
                     </a>
                   </li>
+                  <li>
+                  <a href=\"cart.html\" class=\"site-cart\">
+                    <span class=\"icon icon-clipboard\"></span>
+                  </a>
+                </li>
                     ";
                   }
                   ?>
