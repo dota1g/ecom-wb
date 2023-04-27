@@ -31,119 +31,17 @@ if (isset($_SESSION['login_user'])) {
 }
 $productID = $_GET['id'];
 
-$getAllMails = "SELECT * from email";
-$resultxdd = mysqli_query($db, $getAllMails);
-$mailCount = mysqli_num_rows($resultxdd);
-
 $productsql = "SELECT * from products where productID = '$productID'";
 $productresult = mysqli_query($db, $productsql);
 $productRow = mysqli_fetch_assoc($productresult);
 
-$getAllUsers = "SELECT * from users";
-$resultusers = mysqli_query($db, $getAllUsers);
-$userCount = mysqli_num_rows($resultusers);
 
-$getAllOrders = "SELECT * from orders";
-$resultorders = mysqli_query($db, $getAllOrders);
-$orderCount = mysqli_num_rows($resultorders);
+$name = $_GET['name'];
+$psd = $_GET['SD'];
+$desc = $_GET['desc'];
+$price = $_GET['price'];
+$av = $_GET['av'];
 
-
-//login
-$username = $password = "";
-//register
-$fname = $lname = $email = $regusern = $regpass = "";
-//error codes
-
-
-function test_input($data)
-{
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-  $success = true;
-
-  $pntemp = test_input($_POST["name"]);
-  $psdtemp = test_input($_POST["shortdesc"]);
-  $desctemp = test_input($_POST["description"]);
-  $pricetemp = test_input($_POST["price"]);
-  $availtemp = test_input($_POST["available"]);
-
-  $productName = mysqli_real_escape_string($db, $pntemp);
-  $productSD = mysqli_real_escape_string($db, $psdtemp);
-  $productDesc = mysqli_real_escape_string($db, $desctemp);
-  $productPrice = mysqli_real_escape_string($db, $pricetemp);
-  $isProductAvailable = mysqli_real_escape_string($db, $availtemp);
-
-
-  $target_dir = "../images/";
-  $target_file = $target_dir . basename($_FILES["image"]["name"]);
-  $uploadOk = 1;
-  $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-  // Check if image file is a actual image or fake image
-    $check = getimagesize($_FILES["image"]["tmp_name"]);
-    if ($check !== false) {
-      $uploadError = "File is an image - " . $check["mime"] . ".";
-      $uploadOk = 1;
-    } else {
-      $uploadError = "File is not an image.";
-      $uploadOk = 0;
-      $success = false;
-    }
-
-  // Check if file already exists
-  if (file_exists($target_file)) {
-    $uploadError = "Sorry, file already exists.";
-    $uploadOk = 0;
-    $success = false;
-  }
-
-  // Check file size
-  if ($_FILES["image"]["size"] > 500000) {
-    $uploadError = "Sorry, your file is too large.";
-    $uploadOk = 0;
-    $success = false;
-  }
-
-  // Allow certain file formats
-  if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-    $uploadError = "Sorry, only JPG, JPEG, and PNG files are allowed.";
-    $uploadOk = 0;
-  }
-
-  // Check if $uploadOk is set to 0 by an error
-  if ($uploadOk == 0) {
-    $uploadError = "Sorry, your file was not uploaded.";
-    // if everything is ok, try to upload file
-  } else {
-    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-      $uploadError = "The file " . htmlspecialchars(basename($_FILES["image"]["name"])) . " has been uploaded.";
-    } else {
-      $uploadError = "Sorry, there was an error uploading your file.";
-      $success = false;
-    }
-  }
-
-
-  if ($success) {
-    $imageName = basename($_FILES["image"]["name"]);
-    $sql = "INSERT INTO products (productName, productShortDesc, productDesc, productPrice, isProductAvailable, productImg) 
-              VALUES('$productName', '$productSD', '$productDesc', '$productPrice', '$isProductAvailable', '$imageName')";
-    mysqli_query($db, $sql);
-    $_SESSION['fname'] = $fname;
-    $_SESSION['lname'] = $lname;
-    $_SESSION['email'] = $email;
-    $_SESSION['regusern'] = $regusern;
-    $_SESSION['regpass'] = $regpass;
-    header('location:editservice.php');
-    exit();
-  }
-}
 
 ?>
 
@@ -418,32 +316,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
+            <form action="updatesql.php" method="get">
               <div class="card-body">
                 <div class="form-group">
+
+                  <label for="exampleInputEmail1">ProductID</label>
+                  <input type="text" class="form-control" id="exampleInputEmail1" value="<?= $productID; ?>" name="prodID" readonly>
+
+                </div>
+                <div class="form-group">
                   <label for="exampleInputEmail1">Product/Service Name</label>
-                  <input type="text" class="form-control" id="exampleInputEmail1" value="<?= $productRow['productName']; ?>" name="name" required>
+                  <input type="text" class="form-control" id="exampleInputEmail1" value="<?= $name; ?>" name="name" required>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Short Description</label>
-                  <input type="text" class="form-control" id="exampleInputEmail1" value="<?= $productRow['productShortDesc']; ?>" name="shortdesc" required>
+                  <input type="text" class="form-control" id="exampleInputEmail1" value="<?= $psd; ?>" name="shortdesc" required>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">Description</label>
-                  <textarea type="text" rows="10" cols="30" class="form-control" value="<?= $productRow['productDesc']; ?>" name="description" id="exampleInputPassword1" required> <?= $productRow['productDesc']; ?></textarea>
+                  <textarea type="text" rows="10" cols="30" class="form-control" value="<?= $desc ?>" name="description" id="exampleInputPassword1" required> <?= $desc ?></textarea>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputFile">Add an image</label>
                   <div class="input-group">
                     <div class="custom-file">
-                      <input type="file" name="image" value="<?= $productRow['productImg'];?>" class="custom-file-input" id="exampleInputFile" required>
+                      <input type="file" name="image" class="custom-file-input" id="exampleInputFile" disabled>
                       <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
+                    <div class="invalid-feedback">
+                      Image editing currently not supported
                     </div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Price</label>
-                  <input type="number" class="form-control" value="<?= $productRow['productPrice']; ?>" id="exampleInputEmail1" name="price" required>
+                  <input type="number" class="form-control" value="<?= $price; ?>" id="exampleInputEmail1" name="price" required>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Service availability</label>

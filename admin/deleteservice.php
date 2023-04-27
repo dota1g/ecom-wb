@@ -320,7 +320,7 @@ $orderCount = mysqli_num_rows($resultorders);
                         <div class=\"col px-4\">
                           <div>
                             <div class=\"float-right mt-5 flex-row\">
-                              <a href=\"editservice.php?id=".$row['productID']."\" class=\"btn btn-primary\" role=\"button\">Edit</a>
+                              <a href=\"editservice.php?id=".$row['productID']."&name=".$row['productName']."&SD=".$row['productShortDesc']."&desc=".$row['productDesc']."&price=".$row['productPrice']."&av=".$row['isProductAvailable']."\" class=\"btn btn-primary\" role=\"button\">Edit</a>
                               <a href\"deletesql.php\" type=\"button\" class=\"btn btn-danger\">Delete</a>
                             </div>
                             <h3>".$row['productName']."</h3>
