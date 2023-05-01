@@ -1,25 +1,6 @@
 <?php
 while($row = mysqli_fetch_assoc($productresult)){
-    echo (" <div class=\"list-group\">
-    <div class=\"list-group-item\">
-      <div class=\"row\">
-        <div class=\"col-auto\">
-          <img class=\"img-fluid\" src=\"../user/images/".$row['productImg']."\" alt=\"Photo\" style=\"max-height: 160px;\">
-        </div>
-        <div class=\"col px-4\">
-          <div>
-            <div class=\"float-right mt-5 flex-row\">
-              <a href=\"editservice.php?id=".$row['productID']."\" class=\"btn btn-primary\" role=\"button\">Edit</a>
-              <a href\"deletesql.php\" type=\"button\" class=\"btn btn-danger\">Delete</button>
-            </div>
-            <h3>".$row['productName']."</h3>
-            <p class=\"mb-3\">".$row['productShortDesc']."</p>
-            <h4 class=\"mb-2 mt-5\">₱".$row['productPrice']."<h4>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>");
+    echo (" <option value=\"1\">".$row['productName']."</option>");
 }
 ?>
 

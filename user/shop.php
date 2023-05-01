@@ -77,13 +77,13 @@ $productresult = mysqli_query($db, $productsql);
                       </a>
                     </li>
                     <li>
-                    <a href=\"cart.html\" class=\"site-cart\">
+                    <a href=\"cart.php\" class=\"site-cart\">
                       <span class=\"icon icon-shopping_cart\"></span>
                       <span class=\"count\">2</span>
                     </a>
                   </li>
                   <li>
-                  <a href=\"cart.html\" class=\"site-cart\">
+                  <a href=\"cart.php\" class=\"site-cart\">
                     <span class=\"icon icon-clipboard\"></span>
                   </a>
                 </li>
@@ -102,13 +102,13 @@ $productresult = mysqli_query($db, $productsql);
         <div class="container">
           <ul class="site-menu  d-none d-md-block">
             <li>
-              <a href="index.html">Home</a>
+              <a href="index.php">Home</a>
             </li>
             <li>
-              <a href="about.html">About</a>
+              <a href="about.php">About</a>
             </li>
-            <li class="active"><a href="shop.html">Shop</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li class="active"><a href="shop.php">Shop</a></li>
+            <li><a href="contact.php">Contact</a></li>
           </ul>
         </div>
       </nav>
@@ -117,7 +117,7 @@ $productresult = mysqli_query($db, $productsql);
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Shop</strong></div>
+          <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Shop</strong></div>
         </div>
       </div>
     </div>
@@ -163,10 +163,10 @@ $productresult = mysqli_query($db, $productsql);
               <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
                 <div class="block-4 text-center border">
                   <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="images/minlogo.jpg" alt="Image placeholder" class="img-fluid"></a>
+                    <a href="shop-single.php"><img src="images/minlogo.jpg" alt="Image placeholder" class="img-fluid"></a>
                   </figure>
                   <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">Minimalist Logo</a></h3>
+                    <h3><a href="shop-single.php">Minimalist Logo</a></h3>
                     <p class="mb-0">Simple logo for your business</p>
                     <p class="text-primary font-weight-bold">>₱1,499.00</p>
                   </div>

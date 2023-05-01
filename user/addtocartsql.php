@@ -9,7 +9,7 @@ $result = mysqli_query($db, $usersql);
 $userRow = mysqli_fetch_assoc($result);
 $userID = $userRow['userID'];
 
-$cartsql = "INSERT into cart (`userID`, `productID`) values ('$userID', '$prodID')";
+$cartsql = "INSERT into orders (`userID`, `productID`) values ('$userID', '$prodID')";
 mysqli_query($db, $cartsql);
-header('Location:cart.php')
+header('Location:thankyou.php')
 ?>

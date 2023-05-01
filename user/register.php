@@ -113,7 +113,7 @@
 <body class="text-center">
   <main class="form-signin">
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-      <a href="index.html">
+      <a href="index.php">
         <img class="mb-4" src="images/header.png" alt="" width="150" height="auto" />
       </a>
       <h1 class="h3 mb-3 fw-normal">Register</h1>

@@ -22,7 +22,8 @@
   <?php
   session_start();
   include('config.php');
-  if (!isset($_SESSION['login_user'])){
+  $error = "";
+  if (!isset($_SESSION['login_user'])) {
     header("Location:login.php");
   } else {
     $user = $_SESSION['login_user'];
@@ -30,15 +31,25 @@
     $userResult = mysqli_query($db, $usersql);
     $userRow = mysqli_fetch_assoc($userResult);
     $userID = $userRow['userID'];
-    $sql = "SELECT cartID, 
-                products.productName as productName,
-                products.productPrice as productPrice,
-                products.productImg as productImg,
-                users.username as username
-                from ((cart INNER JOIN users on cart.userID = users.userID)
-                      INNER JOIN products on cart.productID = products.productID)
-                      where users.userID = '$userID'";
+    $_SESSION['checkout_product'] = $_GET['id'];
+    $productID = $_SESSION['checkout_product'];
+    $sql = "SELECT * from products where productID = '$productID'";
     $result = mysqli_query($db, $sql);
+    $productRow = mysqli_fetch_assoc($result);
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $cardNo = $_POST['cardNo'];
+      $prodID = $_POST['productID'];
+      $MCregex = "^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$^";
+      $visaregex = "^4[0-9]{12}(?:[0-9]{3})?$^";
+
+      if (preg_match($MCregex, $cardNo) || preg_match($visaregex, $cardNo)) {
+        header('Location:addtocartsql.php?id=' . $prodID);
+      } else {
+        $error = "Invalid card number!";
+        header('Location:checkout.php?id=' . $prodID . '&error=' . $error);
+      }
+    }
   }
 
   ?>
@@ -71,10 +82,10 @@
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
                 <ul>
-                  <li><a href="login.html"><span class="icon icon-person"></span></a></li>
+                  <li><a href="login.php"><span class="icon icon-person"></span></a></li>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                   <li>
-                    <a href="cart.html" class="site-cart">
+                    <a href="cart.php" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
                       <span class="count">2</span>
                     </a>
@@ -91,7 +102,7 @@
         <div class="container">
           <ul class="site-menu  d-none d-md-block">
             <li>
-              <a href="index.html">Home</a>
+              <a href="index.php">Home</a>
               <!-- <ul class="dropdown">
                 <li><a href="#">Menu One</a></li>
                 <li><a href="#">Menu Two</a></li>
@@ -107,15 +118,15 @@
               </ul> -->
             </li>
             <li>
-              <a href="about.html">About</a>
+              <a href="about.php">About</a>
               <!-- <ul class="dropdown">
                 <li><a href="#">Menu One</a></li>
                 <li><a href="#">Menu Two</a></li>
                 <li><a href="#">Menu Three</a></li>
               </ul> -->
             </li>
-            <li class="active"><a href="shop.html">Shop</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li class="active"><a href="shop.php">Shop</a></li>
+            <li><a href="contact.php">Contact</a></li>
           </ul>
         </div>
       </nav>
@@ -124,7 +135,7 @@
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <a href="cart.html">Cart</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Checkout</strong></div>
+          <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <a href="cart.php">Cart</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Checkout</strong></div>
         </div>
       </div>
     </div>
@@ -133,6 +144,13 @@
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12">
+            <?php
+            if (isset($_GET['error'])) {
+              echo "<div class=\"alert alert-danger text-center\">
+                                " . $_GET['error'] . "
+                              </div>";
+            }
+            ?>
             <div class="border p-4 rounded" role="alert">
               Returning customer? <a href="#">Click here</a> to login
             </div>
@@ -336,53 +354,35 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <td>Fan Art Commission <strong class="mx-2">x</strong> 1</td>
-                        <td>₱149.00</td>
+                        <td><?= $productRow['productName'] ?></td>
+                        <td>₱<?= $productRow['productPrice'] ?></td>
                       </tr>
                       <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
-                      <td class="text-black">₱149.00</td>
+                      <td class="text-black">₱<?= $productRow['productPrice'] ?></td>
                       </tr>
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-                        <td class="text-black font-weight-bold"><strong>₱149.00</strong></td>
+                        <td class="text-black font-weight-bold"><strong>₱<?= $productRow['productPrice'] ?></strong></td>
                       </tr>
                     </tbody>
                   </table>
 
-                  <div class="border p-3 mb-3">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank">Direct Bank Transfer</a></h3>
-
-                    <div class="collapse" id="collapsebank">
-                      <div class="py-2">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="border p-3 mb-3">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsecheque" role="button" aria-expanded="false" aria-controls="collapsecheque">Cheque Payment</a></h3>
-
-                    <div class="collapse" id="collapsecheque">
-                      <div class="py-2">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-                      </div>
-                    </div>
-                  </div>
-
                   <div class="border p-3 mb-5">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsepaypal" role="button" aria-expanded="false" aria-controls="collapsepaypal">Paypal</a></h3>
-
-                    <div class="collapse" id="collapsepaypal">
-                      <div class="py-2">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsepaypal" role="button" aria-expanded="false" aria-controls="collapsepaypal">Credit/Debit Card</a></h3>
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                      <div class="collapse" id="collapsepaypal">
+                        <div class="py-2">
+                          <input type="number" class="form-control invisible" id="validationServer01" name="productID" value="<?= $productRow['productID'] ?>" pattern="^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$^" maxlength="16" required>
+                          <label for="validationServer01" class="form-label">Card number</label>
+                          <input type="number" class="form-control" id="validationServer01" name="cardNo" pattern="^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$^" maxlength="16" required>
+                        </div>
                       </div>
-                    </div>
                   </div>
 
                   <div class="form-group">
-                    <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='thankyou.html'">Place Order</button>
+                    <input type="submit" class="btn btn-primary btn-lg py-3 btn-block" value="Place Order">
                   </div>
-
+                  </form>
                 </div>
               </div>
             </div>

@@ -89,7 +89,7 @@ if ($emailRow['userID'] != $userRow['userID']){
                   ?>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                   <li>
-                    <a href="cart.html" class="site-cart">
+                    <a href="cart.php" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
                       <span class="count">2</span>
                     </a>
@@ -106,13 +106,13 @@ if ($emailRow['userID'] != $userRow['userID']){
         <div class="container">
           <ul class="site-menu  d-none d-md-block">
             <li>
-              <a href="index.html">Home</a>
+              <a href="index.php">Home</a>
             </li>
             <li>
-              <a href="about.html">About</a>
+              <a href="about.php">About</a>
             </li>
-            <li class="active"><a href="shop.html">Shop</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li class="active"><a href="shop.php">Shop</a></li>
+            <li><a href="contact.php">Contact</a></li>
           </ul>
         </div>
       </nav>
@@ -122,7 +122,7 @@ if ($emailRow['userID'] != $userRow['userID']){
         <div class="bg-light py-3">
           <div class="container">
             <div class="row">
-              <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Inbox</strong></div>
+              <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Inbox</strong></div>
             </div>
           </div>
         </div>
@@ -130,7 +130,7 @@ if ($emailRow['userID'] != $userRow['userID']){
           <section class="content">
             <div class="row">
               <div class="col-md-3">
-                <p><a href="compose.html" class="btn btn-primary text-light btn-block mb-3">Compose</a></p>
+                <p><a href="compose.php" class="btn btn-primary text-light btn-block mb-3">Compose</a></p>
 
                 <div class="card">
                   <div class="card-header">

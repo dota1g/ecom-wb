@@ -11,5 +11,4 @@ $userID = $userRow['userID'];
 
 $cartsql = "DELETE FROM cart where cartID = '$cartID'";
 mysqli_query($db, $cartsql);
-header('Location:cart.php')
-?>
+header('Location:cart.php');

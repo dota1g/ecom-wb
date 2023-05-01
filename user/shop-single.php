@@ -142,9 +142,9 @@ $row = mysqli_fetch_assoc($result)
             </div>
             <?php
             if ($row['isProductAvailable'] == 1) {
-              echo "<p><a href=\"addtocartsql.php?id=".$row['productID']."\" class=\"buy-now btn btn-sm btn-primary\">Add To Cart</a></p>";
+              echo "<p><a href=\"checkout.php?id=".$row['productID']."\" class=\"buy-now btn btn-sm btn-primary\">Add To Cart</a></p>";
             } else {
-              echo "<p><button href=\"cart.html\" class=\"buy-now btn btn-sm btn-primary\" disabled>Add To Cart</button></p>
+              echo "<p><button href=\"checkout.php\" class=\"buy-now btn btn-sm btn-primary\" disabled>Add To Cart</button></p>
               <div class=\"alert alert-danger text-center\" role=\"alert\">
                   Currently not available
                 </div>";
