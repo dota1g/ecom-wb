@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-outline-primary btn-block"><a href="starter.html">Sign In</a></button>
+            <button type="submit" class="btn btn-outline-primary btn-block"><a href="starter.php">Sign In</a></button>
           </div>
           <!-- /.col -->
         </div>

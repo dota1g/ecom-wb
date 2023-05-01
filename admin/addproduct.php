@@ -139,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['email'] = $email;
     $_SESSION['regusern'] = $regusern;
     $_SESSION['regpass'] = $regpass;
-    header('location:editservice.php');
+    header('location:deleteservice.php');
     exit();
   }
 }
@@ -156,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="index3.html" class="nav-link">Home</a>
+          <a href="index3.php" class="nav-link">Home</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Contact</a>
@@ -295,7 +295,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="starter.html" class="brand-link">
+      <a href="starter.php" class="brand-link">
         <img src="../user/images/header.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
         <span class="brand-text font-weight-light">Admin Portal</span>
       </a>
@@ -338,13 +338,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="pending-orders.html" class="nav-link">
+                  <a href="pending-orders.php" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>Orders</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="messages.html" class="nav-link ">
+                  <a href="messages.php" class="nav-link ">
                     <i class="nav-icon fas fa-th"></i>
                     <p>Messages</p>
                   </a>
@@ -365,13 +365,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </p>
             </a>
             <li class="nav-item">
-              <a href="addproduct.html" class="nav-link active">
+              <a href="addproduct.php" class="nav-link active">
                 <i class="nav-icon fas fa-th"></i>
                 <p>Add a service</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="deleteservice.html" class="nav-link">
+              <a href="deleteservice.php" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>View/Edit/Delete a service</p>
               </a>

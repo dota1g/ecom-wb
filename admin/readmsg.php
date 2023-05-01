@@ -31,7 +31,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             ></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">Home</a>
+            <a href="index3.php" class="nav-link">Home</a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
             <a href="#" class="nav-link">Contact</a>
@@ -212,7 +212,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Main Sidebar Container -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="starter.html" class="brand-link">
+        <a href="starter.php" class="brand-link">
           <img
             src="../user/images/header.png"
             alt="AdminLTE Logo"
@@ -274,13 +274,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="pending-orders.html" class="nav-link ">
+                    <a href="pending-orders.php" class="nav-link ">
                       <i class="nav-icon fas fa-th"></i>
                       <p>Orders</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="messages.html" class="nav-link active">
+                    <a href="messages.php" class="nav-link active">
                       <i class="nav-icon fas fa-th"></i>
                       <p>Messages</p>
                     </a>
@@ -301,7 +301,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
               <li class="nav-item">
-                <a href="addproduct.html" class="nav-link">
+                <a href="addproduct.php" class="nav-link">
                   <i class="nav-icon fas fa-th"></i>
                   <p>Add a service</p>
                 </a>
@@ -313,7 +313,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
             </ul>
-            <div class="fixed-bottom"><a href="login.html" type="button" class="btn-primary btn-lg mb-4 pl-3 pr-3" style="margin-left: 72px;">Logout</a></div>
+            <div class="fixed-bottom"><a href="login.php" type="button" class="btn-primary btn-lg mb-4 pl-3 pr-3" style="margin-left: 72px;">Logout</a></div>
           </nav>
           <!-- /.sidebar-menu -->
         </div>
@@ -343,7 +343,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="container-fluid">
             <div class="row">
               <div class="col-md-3">
-                <a href="mailbox.html" class="btn btn-primary btn-block mb-3">Back to Inbox</a>
+                <a href="mailbox.php" class="btn btn-primary btn-block mb-3">Back to Inbox</a>
     
                 <div class="card">
                   <div class="card-header">
@@ -481,7 +481,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- /.card-footer -->
                 <div class="card-footer">
                   <div class="float-right">
-                    <button type="button" class="btn btn-default"><i class="fas fa-reply"></i><a href="composemsg.html">Reply</a></button>
+                    <button type="button" class="btn btn-default"><i class="fas fa-reply"></i><a href="composemsg.php">Reply</a></button>
                     <button type="button" class="btn btn-default"><i class="fas fa-share"></i> Forward</button>
                   </div>
                   <button type="button" class="btn btn-default"><i class="far fa-trash-alt"></i> Delete</button>

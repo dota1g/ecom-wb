@@ -1,6 +1,29 @@
 <?php
 while($row = mysqli_fetch_assoc($productresult)){
-    echo (" <option value=\"1\">".$row['productName']."</option>");
+    echo (" <tr data-widget=\"expandable-table text-center\" aria-expanded=\"false\">
+    <td>".$row['orderID']."</td>
+    <td>".$row['firstName']." ".$row['lastname']."</td>
+    <td>".$row['dateOrdered']."</td>
+    <td>".$row['productName']."</td>
+    <td>₱".$row['price']."</td>
+    <td>".($row['orderStatus'] = 1 ? "Work in progress" : "Pending")."</td>
+    <td>".($row['orderStatus'] = 1 ?
+      "<div class=\"m-1 align-items-center flex-row d-flex ml-1\">
+        <button type=\"button\" class=\"btn btn-primary ml-1\">
+          Contact
+        </button>
+      </div>" : "<div class=\"m-1 align-items-center flex-row d-flex ml-1\">
+      <button type=\"button\" class=\"btn btn-primary ml-1\">
+        Contact
+      </button>
+    </div>
+    <div class=\"m-1 align-items-center flex-row d-flex ml-1\">
+        <button type=\"button\" class=\"btn btn-primary ml-1\">
+          Accept
+        </button>
+      </div>")."
+    </td>
+  </tr>");
 }
 ?>
 

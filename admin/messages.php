@@ -31,7 +31,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             ></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">Home</a>
+            <a href="index3.php" class="nav-link">Home</a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
             <a href="#" class="nav-link">Contact</a>
@@ -212,7 +212,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Main Sidebar Container -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="starter.html" class="brand-link">
+        <a href="starter.php" class="brand-link">
           <img
             src="../user/images/header.png"
             alt="AdminLTE Logo"
@@ -274,19 +274,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="pending-orders.html" class="nav-link ">
+                    <a href="pending-orders.php" class="nav-link ">
                       <i class="nav-icon fas fa-th"></i>
                       <p>Orders</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="messages.html" class="nav-link active">
+                    <a href="messages.php" class="nav-link active">
                       <i class="nav-icon fas fa-th"></i>
                       <p>Messages</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="reviews.html" class="nav-link">
+                    <a href="reviews.php" class="nav-link">
                       <i class="nav-icon fas fa-th"></i>
                       <p>Reviews</p>
                     </a>
@@ -301,13 +301,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
               <li class="nav-item">
-                <a href="addproduct.html" class="nav-link">
+                <a href="addproduct.php" class="nav-link">
                   <i class="nav-icon fas fa-th"></i>
                   <p>Add a service</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="deleteservice.html" class="nav-link">
+                <a href="deleteservice.php" class="nav-link">
                   <i class="nav-icon fas fa-th"></i>
                   <p>View/Edit/Delete a service</p>
                 </a>
@@ -342,7 +342,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <section class="content">
           <div class="row">
             <div class="col-md-3">
-              <a href="compose.html" class="btn btn-primary btn-block mb-3">Compose</a>
+              <a href="compose.php" class="btn btn-primary btn-block mb-3">Compose</a>
     
               <div class="card">
                 <div class="card-header">
@@ -470,7 +470,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           </div>
                         </td>
                         <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
-                        <td class="mailbox-name"><a href="readmsg.html">Alexander Pierce</a></td>
+                        <td class="mailbox-name"><a href="readmsg.php">Alexander Pierce</a></td>
                         <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a solution to this problem...
                         </td>
                         <td class="mailbox-attachment"></td>
@@ -484,7 +484,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           </div>
                         </td>
                         <td class="mailbox-star"><a href="#"><i class="fas fa-star-o text-warning"></i></a></td>
-                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-name"><a href="read-mail.php">Alexander Pierce</a></td>
                         <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a solution to this problem...
                         </td>
                         <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
@@ -498,7 +498,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           </div>
                         </td>
                         <td class="mailbox-star"><a href="#"><i class="fas fa-star-o text-warning"></i></a></td>
-                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-name"><a href="read-mail.php">Alexander Pierce</a></td>
                         <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a solution to this problem...
                         </td>
                         <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
@@ -512,7 +512,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           </div>
                         </td>
                         <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
-                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-name"><a href="read-mail.php">Alexander Pierce</a></td>
                         <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a solution to this problem...
                         </td>
                         <td class="mailbox-attachment"></td>
@@ -526,7 +526,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           </div>
                         </td>
                         <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
-                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-name"><a href="read-mail.php">Alexander Pierce</a></td>
                         <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a solution to this problem...
                         </td>
                         <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
@@ -540,7 +540,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           </div>
                         </td>
                         <td class="mailbox-star"><a href="#"><i class="fas fa-star-o text-warning"></i></a></td>
-                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-name"><a href="read-mail.php">Alexander Pierce</a></td>
                         <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a solution to this problem...
                         </td>
                         <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
@@ -554,7 +554,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           </div>
                         </td>
                         <td class="mailbox-star"><a href="#"><i class="fas fa-star-o text-warning"></i></a></td>
-                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-name"><a href="read-mail.php">Alexander Pierce</a></td>
                         <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a solution to this problem...
                         </td>
                         <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
@@ -568,7 +568,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           </div>
                         </td>
                         <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
-                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-name"><a href="read-mail.php">Alexander Pierce</a></td>
                         <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a solution to this problem...
                         </td>
                         <td class="mailbox-attachment"></td>
@@ -582,7 +582,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           </div>
                         </td>
                         <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
-                        <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                        <td class="mailbox-name"><a href="read-mail.php">Alexander Pierce</a></td>
                         <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a solution to this problem...
                         </td>
                         <td class="mailbox-attachment"></td>
