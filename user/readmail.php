@@ -12,9 +12,9 @@ if (isset($_SESSION['login_user'])) {
   header('Location:index.php');
 }
 
-$sql = "SELECT * from email where userID=".$userRow['userID']."";
+$sql = "SELECT * from email where userID=" . $userRow['userID'] . "";
 $result = mysqli_query($db, $sql);
-$getUnreadMails = "SELECT * from email where userID=".$userRow['userID']." AND didUserReadMsg = 0";
+$getUnreadMails = "SELECT * from email where userID=" . $userRow['userID'] . " AND didUserReadMsg = 0";
 $resultxdd = mysqli_query($db, $getUnreadMails);
 $unreadMailsCount = mysqli_num_rows($resultxdd);
 
@@ -23,13 +23,13 @@ $getEmail = "SELECT * from email where emailID='$emailID'";
 $emailresult = mysqli_query($db, $getEmail);
 $emailRow = mysqli_fetch_assoc($emailresult);
 
-if ($emailRow['userID'] != $userRow['userID']){
-    header("Location:error403.php");
+if ($emailRow['userID'] != $userRow['userID']) {
+  header("Location:error403.php");
 }
 ?>
 
 <head>
-  <title>Messages | <?php echo $emailRow['emailSubject']?></title>
+  <title>Messages | <?php echo $emailRow['emailSubject'] ?></title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -147,11 +147,11 @@ if ($emailRow['userID'] != $userRow['userID']){
                       <li class="nav-item active">
                         <a href="#" class="nav-link">
                           <i class="fas fa-inbox"></i> Inbox
-                          <?php if ($unreadMailsCount > 0){
-                            echo "<span class=\"count badge badge-primary float-right\">".$unreadMailsCount."</span>";
-                            } else{
-                              echo "";
-                            }?>
+                          <?php if ($unreadMailsCount > 0) {
+                            echo "<span class=\"count badge badge-primary float-right\">" . $unreadMailsCount . "</span>";
+                          } else {
+                            echo "";
+                          } ?>
                         </a>
                       </li>
                       <li class="nav-item">
@@ -174,64 +174,68 @@ if ($emailRow['userID'] != $userRow['userID']){
               </div>
               <!-- /.col -->
               <div class="col-md-9">
-          <div class="card card-primary card-outline">
-            <div class="card-header">
-              <h3 class="card-title">Read Mail</h3>
+                <div class="card card-primary card-outline">
+                  <div class="card-header">
+                    <h3 class="card-title">Read Mail</h3>
 
-              <div class="card-tools">
-                <a href="#" class="btn btn-tool" title="Previous"><i class="fas fa-chevron-left"></i></a>
-                <a href="#" class="btn btn-tool" title="Next"><i class="fas fa-chevron-right"></i></a>
-              </div>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body p-0">
-              <div class="mailbox-read-info">
-                <h5><?php echo $emailRow['emailSubject']?></h5>
-                <h6>From: Admin
-                  <span class="mailbox-read-time float-right"><?php echo $emailRow['dateSent']?></span></h6>
-              </div>
-              <!-- /.mailbox-read-info -->
-              <div class="mailbox-controls with-border text-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm" data-container="body" title="Delete">
-                    <i class="far fa-trash-alt"></i>
-                  </button>
-                  <button type="button" class="btn btn-default btn-sm" data-container="body" title="Reply">
-                    <i class="fas fa-reply"></i>
-                  </button>
-                  <button type="button" class="btn btn-default btn-sm" data-container="body" title="Forward">
-                    <i class="fas fa-share"></i>
-                  </button>
+                    <div class="card-tools">
+                      <a href="#" class="btn btn-tool" title="Previous"><i class="fas fa-chevron-left"></i></a>
+                      <a href="#" class="btn btn-tool" title="Next"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body p-0">
+                    <div class="mailbox-read-info">
+                      <h5><?php echo $emailRow['emailSubject'] ?></h5>
+                      <h6>From: Admin
+                        <span class="mailbox-read-time float-right"><?php echo $emailRow['dateSent'] ?></span>
+                      </h6>
+                      <?php 
+                      if($emailRow['orderID'] != 0){
+                        $getOrderDetails = "SELECT *, products.productName as productName FROM (orders INNER join products on products.productID = orders.productID) WHERE orderID = ".$emailRow['orderID'].";";
+                        $orderResult = mysqli_query($db, $getOrderDetails);
+                        $itsfuckinrow = mysqli_fetch_assoc($orderResult);
+                        echo "<div class=\"alert alert-info mt-2\" role=\"alert\">
+                        You are messaging about this order: ".$itsfuckinrow['productName']."<br/>
+                        Ordered at ".$itsfuckinrow['dateOrdered']."
+                      </div>";
+                      }
+                      ?>
+                    </div>
+                    <!-- /.mailbox-read-info -->
+                    <!-- /.mailbox-controls -->
+                    <div class="mailbox-read-message">
+                      <?php echo $emailRow['emailContent'] ?>
+                    </div>
+                    <!-- /.mailbox-read-message -->
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer bg-white">
+                    <ul class="mailbox-attachments d-flex align-items-stretch clearfix">
+                    </ul>
+                  </div>
+                  <!-- /.card-footer -->
+                  <div class="card-footer">
+                    <div class="float-right">
+                    <?php
+                        if ($emailRow['orderID'] != 0){
+                          echo
+                          "<a href=\"composemsg.php?orderID=".$emailRow['orderID']."\" class=\"btn btn-default btn-sm\" data-container=\"body\" title=\"Reply\">
+                          <i class=\"fas fa-reply\"></i>
+                          Reply
+                        </a>";
+                        } else {
+                          "<a href=\"composemsg.php\" class=\"btn btn-default btn-sm\" data-container=\"body\" title=\"Reply\">
+                          <i class=\"fas fa-reply\"></i>
+                          Reply
+                        </a>";
+                        }
+                        ?>
+                  </div>
+                  <!-- /.card-footer -->
                 </div>
-                <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm" title="Print">
-                  <i class="fas fa-print"></i>
-                </button>
+                <!-- /.card -->
               </div>
-              <!-- /.mailbox-controls -->
-              <div class="mailbox-read-message">
-              <?php echo $emailRow['emailContent']?></
-              </div>
-              <!-- /.mailbox-read-message -->
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer bg-white">
-              <ul class="mailbox-attachments d-flex align-items-stretch clearfix">
-              </ul>
-            </div>
-            <!-- /.card-footer -->
-            <div class="card-footer">
-              <div class="float-right">
-                <button type="button" class="btn btn-default"><i class="fas fa-reply"></i> Reply</button>
-                <button type="button" class="btn btn-default"><i class="fas fa-share"></i> Forward</button>
-              </div>
-              <button type="button" class="btn btn-default"><i class="far fa-trash-alt"></i> Delete</button>
-              <button type="button" class="btn btn-default"><i class="fas fa-print"></i> Print</button>
-            </div>
-            <!-- /.card-footer -->
-          </div>
-          <!-- /.card -->
-        </div>
               <!-- /.col -->
             </div>
             <!-- /.row -->

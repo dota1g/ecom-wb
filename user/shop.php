@@ -46,7 +46,7 @@ $productresult = mysqli_query($db, $productsql);
         <div class="container">
           <div class="row align-items-center">
 
-            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+            <div class="col-6 col-md-4 order-2 invisible order-md-1 site-search-icon text-left">
               <form action="" class="site-block-top-search">
                 <span class="icon icon-search2"></span>
                 <input type="text" class="form-control border-0" placeholder="Search">
@@ -108,7 +108,7 @@ $productresult = mysqli_query($db, $productsql);
               <a href="about.php">About</a>
             </li>
             <li class="active"><a href="shop.php">Shop</a></li>
-            <li><a href="contact.php">Contact</a></li>
+            <li><a href="composemsg.php">Contact</a></li>
           </ul>
         </div>
       </nav>
@@ -135,7 +135,7 @@ $productresult = mysqli_query($db, $productsql);
                 </div>
                 <div class="d-flex">
                   <div class="dropdown mr-1 ml-md-auto">
-                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-secondary invisible btn-sm dropdown-toggle" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Latest
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
@@ -145,8 +145,8 @@ $productresult = mysqli_query($db, $productsql);
                     </div>
                   </div>
                   <div class="btn-group">
-                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Reference</button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                    <button type="button" class="btn btn-secondary invisible btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Reference</button>
+                    <div class="dropdown-menu invisible" aria-labelledby="dropdownMenuReference">
                       <a class="dropdown-item" href="#">Relevance</a>
                       <a class="dropdown-item" href="#">Name, A to Z</a>
                       <a class="dropdown-item" href="#">Name, Z to A</a>
@@ -160,18 +160,6 @@ $productresult = mysqli_query($db, $productsql);
             </div>
             <div class="row mb-5">
 
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a href="shop-single.php"><img src="images/minlogo.jpg" alt="Image placeholder" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="shop-single.php">Minimalist Logo</a></h3>
-                    <p class="mb-0">Simple logo for your business</p>
-                    <p class="text-primary font-weight-bold">>₱1,499.00</p>
-                  </div>
-                </div>
-              </div>
               <?php
               while ($row = mysqli_fetch_assoc($productresult)) {
                 echo "<div class=\"col-sm-6 col-lg-4 mb-4 border\" data-aos=\"fade-up\">
@@ -189,21 +177,6 @@ $productresult = mysqli_query($db, $productsql);
               }
               //teyvat archons please help
               ?>
-            </div>
-            <div class="row" data-aos="fade-up">
-              <div class="col-md-12 text-center">
-                <div class="site-block-27">
-                  <ul>
-                    <li><a href="#">&lt;</a></li>
-                    <li class="active"><span>1</span></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&gt;</a></li>
-                  </ul>
-                </div>
-              </div>
             </div>
           </div>
 

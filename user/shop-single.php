@@ -101,7 +101,7 @@ $row = mysqli_fetch_assoc($result)
               <a href="about.html">About</a>
             </li>
             <li class="active"><a href="shop.html">Shop</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="composemsg.php">Contact</a></li>
           </ul>
         </div>
       </nav>
@@ -128,7 +128,7 @@ $row = mysqli_fetch_assoc($result)
             <h2 class="text-black"><?php echo $row['productName'] ?></h2>
             <p><?php echo $row['productDesc'] ?></p>
             <p><strong class="h4">Starting at: </strong> <strong class="text-primary h2">₱<?php echo $row['productPrice'] ?></strong></p>
-            <div class="mb-5">
+            <div class="mb-5 invisible">
               <div class="input-group mb-3" style="max-width: 120px;">
                 <div class="input-group-prepend">
                   <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
@@ -142,9 +142,9 @@ $row = mysqli_fetch_assoc($result)
             </div>
             <?php
             if ($row['isProductAvailable'] == 1) {
-              echo "<p><a href=\"checkout.php?id=".$row['productID']."\" class=\"buy-now btn btn-sm btn-primary\">Add To Cart</a></p>";
+              echo "<p><a href=\"checkout.php?id=".$row['productID']."\" class=\"buy-now btn btn-sm btn-primary\">Checkout</a></p>";
             } else {
-              echo "<p><button href=\"checkout.php\" class=\"buy-now btn btn-sm btn-primary\" disabled>Add To Cart</button></p>
+              echo "<p><button href=\"checkout.php\" class=\"buy-now btn btn-sm btn-primary\" disabled>Checkout</button></p>
               <div class=\"alert alert-danger text-center\" role=\"alert\">
                   Currently not available
                 </div>";

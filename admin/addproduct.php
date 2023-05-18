@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   // Check file size
-  if ($_FILES["image"]["size"] > 500000) {
+  if ($_FILES["image"]["size"] > 1000000000000000000000000000000000000000000000) {
     $uploadError = "Sorry, your file is too large.";
     $uploadOk = 0;
     $success = false;
@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Check if $uploadOk is set to 0 by an error
   if ($uploadOk == 0) {
-    $uploadError = "Sorry, your file was not uploaded.";
+    // $uploadError = "Sorry, your file was not uploaded.";
     // if everything is ok, try to upload file
   } else {
     if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
@@ -128,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
 
-
+  print_r($uploadError);
   if ($success) {
     $imageName = basename($_FILES["image"]["name"]);
     $sql = "INSERT INTO products (productName, productShortDesc, productDesc, productPrice, isProductAvailable, productImg) 

@@ -31,8 +31,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     header('Location:index.php');
   }
 
-  $sql = "SELECT *, email.userID as userID, users.username as username, users.firstName as firstname, users.lastname as lastname
-  from (email inner join users on email.userID = users.userID) where isFromAdmin = 0 order by dateSent desc";
+  $sql = "SELECT * from email where isFromAdmin = 1";
   $result = mysqli_query($db, $sql);
   $getUnreadMails = "SELECT * from email where didAdminReadMsg = 0";
   $resultxdd = mysqli_query($db, $getUnreadMails);
@@ -346,12 +345,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1>Inbox</h1>
+                <h1>Sent Messages</h1>
               </div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active">Inbox</li>
+                  <li class="breadcrumb-item active">Sent Messages</li>
                 </ol>
               </div>
             </div>
@@ -377,13 +376,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="card-body p-0">
                   <ul class="nav nav-pills flex-column">
                     <li class="nav-item active">
-                      <a href="#" class="nav-link">
+                      <a href="messages.php" class="nav-link">
                         <i class="fas fa-inbox"></i> Inbox
                         <span class="badge bg-primary float-right">12</span>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="sentmsgs.php" class="nav-link">
+                      <a href="#" class="nav-link">
                         <i class="far fa-envelope"></i> Sent
                       </a>
                   </ul>
@@ -397,7 +396,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-md-9">
               <div class="card card-primary card-outline">
                 <div class="card-header">
-                  <h3 class="card-title">Inbox</h3>
+                  <h3 class="card-title">Sent Messages</h3>
     
                   <div class="card-tools">
                     <div class="input-group input-group-sm">
@@ -459,12 +458,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             echo (" <tr>
                             <td>
                               <div class=\"icheck-primar\">
-                              ".($row['didAdminReadMsg'] == 0 ? "<span class=\"count badge badge-primary \">New</span>" : "" )."
+                              ".($row['didUserReadMsg'] == 0 ? "<span class=\"count badge badge-primary \">New</span>" : "" )."
                                 <label for=\"check1\"></label>
                               </div>
                             </td>
                             <td class=\"mailbox-star\"><a href=\"\"><i class=\"fas fa-star text-warning\"></i></a></td>
-                            <td class=\"mailbox-name text-black\"><a href=\"markasread.php?id=".$row['emailID']."\">".$row['firstname']." ".$row['lastname']."</a></td>
+                            <td class=\"mailbox-name text-black\"><a href=\"markasread.php?id=".$row['emailID']."\">Admin</a></td>
                             <td class=\"mailbox-subject ".($row['didUserReadMsg'] == 0 ? "text-black" : "" )."\"><b>" . $row['emailSubject'] . "</b> - " . $shortenedContent . " ...
                             </td>
                             <td class=\"mailbox-attachment\"></td>

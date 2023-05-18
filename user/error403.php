@@ -92,7 +92,7 @@ if (isset($_SESSION['login_user'])) {
               <a href="about.html">About</a>
             </li>
             <li class="active"><a href="shop.html">Shop</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="composemsg.php">Contact</a></li>
           </ul>
         </div>
       </nav>

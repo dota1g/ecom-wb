@@ -91,7 +91,7 @@
     }
 
     if ($success) {
-      $sql = "INSERT INTO users (username, firstName, lastname, email, PASSWORD) 
+      $sql = "INSERT INTO users (username, firstName, lastname, email, userpassword) 
               VALUES('$regusern', '$fname', '$lname', '$email', '$regpass')";
       mysqli_query($db, $sql);
       $_SESSION['fname'] = $fname;

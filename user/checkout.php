@@ -151,21 +151,20 @@
                               </div>";
             }
             ?>
-            <div class="border p-4 rounded" role="alert">
+            <!-- <div class="border p-4 rounded" role="alert">
               Returning customer? <a href="#">Click here</a> to login
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 mb-5 mb-md-0">
-            <h2 class="h3 mb-3 text-black">Billing Details</h2>
-            <p class="mb-3">Why do we need this? <a data-toggle="tooltip" data-placement="top" title="Supported payment systems in this site uses the provided billing address to verify ownership of the payee.">🛈</a></p>
+            <h2 class="h3 mb-5 text-black ">Billing Details</h2>
             <div class="p-3 p-lg-5 border">
               <div class="form-group">
                 <label for="c_country" class="text-black">Country <span class="text-danger">*</span></label>
                 <select id="c_country" class="form-control">
                   <option value="1">Select a country</option>
-                  <option value="2">Bangladesh</option>
+                  <option value="2" selected>Philippines</option>
                   <option value="3">Algeria</option>
                   <option value="4">Afghanistan</option>
                   <option value="5">Ghana</option>
@@ -178,11 +177,11 @@
               <div class="form-group row">
                 <div class="col-md-6">
                   <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_fname" name="c_fname">
+                  <input type="text" class="form-control" id="c_fname" name="c_fname" required>
                 </div>
                 <div class="col-md-6">
                   <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_lname" name="c_lname">
+                  <input type="text" class="form-control" id="c_lname" name="c_lname" required>
                 </div>
               </div>
 
@@ -195,7 +194,7 @@
 
               <div class="form-group row">
                 <div class="col-md-12">
-                  <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
+                  <label for="c_address" class="text-black">Address <span class="text-danger" required>*</span></label>
                   <input type="text" class="form-control" id="c_address" name="c_address" placeholder="Street address">
                 </div>
               </div>
@@ -206,12 +205,12 @@
 
               <div class="form-group row">
                 <div class="col-md-6">
-                  <label for="c_state_country" class="text-black">State / Country <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_state_country" name="c_state_country">
+                  <label for="c_state_country" class="text-black">State / Country / Province <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_state_country" name="c_state_country" required>
                 </div>
                 <div class="col-md-6">
                   <label for="c_postal_zip" class="text-black">Posta / Zip <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
+                  <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip" required>
                 </div>
               </div>
 
@@ -226,21 +225,9 @@
                 </div>
               </div>
 
-              <div class="form-group">
-                <label for="c_create_account" class="text-black" data-toggle="collapse" href="#create_an_account" role="button" aria-expanded="false" aria-controls="create_an_account"><input type="checkbox" value="1" id="c_create_account"> Create an account?</label>
-                <div class="collapse" id="create_an_account">
-                  <div class="py-2">
-                    <p class="mb-3">Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
-                    <div class="form-group">
-                      <label for="c_account_password" class="text-black">Account Password</label>
-                      <input type="email" class="form-control" id="c_account_password" name="c_account_password" placeholder="">
-                    </div>
-                  </div>
-                </div>
-              </div>
 
 
-              <div class="form-group">
+              <div class="form-group invisible">
                 <label for="c_ship_different_address" class="text-black" data-toggle="collapse" href="#ship_different_address" role="button" aria-expanded="false" aria-controls="ship_different_address"><input type="checkbox" value="1" id="c_ship_different_address"> Ship To A Different Address?</label>
                 <div class="collapse" id="ship_different_address">
                   <div class="py-2">
@@ -317,35 +304,20 @@
                 </div>
               </div>
 
-              <div class="form-group">
+              <!-- <div class="form-group invisible">
                 <label for="c_order_notes" class="text-black">Order Notes</label>
                 <textarea name="c_order_notes" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="Write your notes here..."></textarea>
-              </div>
+              </div> -->
 
             </div>
           </div>
           <div class="col-md-6">
 
-            <div class="row mb-5">
-              <div class="col-md-12">
-                <h2 class="h3 mb-3 text-black">Coupon Code</h2>
-                <div class="p-3 p-lg-5 border">
 
-                  <label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
-                  <div class="input-group w-75">
-                    <input type="text" class="form-control" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary btn-sm" type="button" id="button-addon2">Apply</button>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
 
             <div class="row mb-5">
               <div class="col-md-12">
-                <h2 class="h3 mb-3 text-black">Your Order</h2>
+                <h2 class="h3 mb-5 mb-1 text-black">Your Order</h2>
                 <div class="p-3 p-lg-5 border">
                   <table class="table site-block-order-table mb-5">
                     <thead>
@@ -367,14 +339,22 @@
                     </tbody>
                   </table>
 
-                  <div class="border p-3 mb-5">
+                  <div class="border p-3 mb-2">
                     <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsepaypal" role="button" aria-expanded="false" aria-controls="collapsepaypal">Credit/Debit Card</a></h3>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                       <div class="collapse" id="collapsepaypal">
                         <div class="py-2">
                           <input type="number" class="form-control invisible" id="validationServer01" name="productID" value="<?= $productRow['productID'] ?>" pattern="^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$^" maxlength="16" required>
                           <label for="validationServer01" class="form-label">Card number</label>
-                          <input type="number" class="form-control" id="validationServer01" name="cardNo" pattern="^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$^" maxlength="16" required>
+                          <input type="text" class="form-control" id="validationServer01" name="cardNo" pattern="^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$^" maxlength="16" required>
+                        </div>
+                        <div class="py-2">
+                          <label for="validationServer01" class="form-label">CVV</label>
+                          <input type="text" class="form-control" id="validationServer01" name="cardNo" pattern="^[0-9]{3,4}$^" maxlength="3" required>
+                        </div>
+                        <div class="py-2">
+                          <label for="validationServer01" class="form-label">Expiry</label>
+                          <input type="text" class="form-control" id="validationServer01" name="cardNo" pattern="^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$^" maxlength="3" required>
                         </div>
                       </div>
                   </div>

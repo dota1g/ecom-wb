@@ -41,7 +41,8 @@ $getAllUsers = "SELECT * from users";
 $resultusers = mysqli_query($db, $getAllUsers);
 $userCount = mysqli_num_rows($resultusers);
 
-$joinTheseStupidTables = "SELECT orderID, 
+$joinTheseStupidTables = "SELECT orderID,
+                                orders.userID as ouid,
                                 users.username as username,
                                 users.firstName as firstName,
                                 users.lastname as lastname,
@@ -320,27 +321,33 @@ $resultorders = mysqli_query($db, $joinTheseStupidTables);
                 <tbody>
                 <?php
 while($row = mysqli_fetch_assoc($resultorders)){
+
     echo (" <tr data-widget=\"expandable-table text-center\" aria-expanded=\"false\">
     <td>".$row['orderID']."</td>
     <td>".$row['firstName']." ".$row['lastname']."</td>
     <td>".$row['dateOrdered']."</td>
     <td>".$row['productName']."</td>
     <td>₱".$row['price']."</td>
-    <td>".($row['orderStatus'] = 1 ? "Work in progress" : "Pending")."</td>
-    <td>".($row['orderStatus'] = 1 ?
-      "<div class=\"m-1 align-items-center flex-row d-flex ml-1\">
-        <button type=\"button\" class=\"btn btn-primary ml-1\">
+    <td>".($row['orderStatus'] == 1 ? "Work in progress" : "Pending")."</td>
+    <td>".($row['orderStatus'] == 1 ?
+      "<div class=\"d-flex\">
+      <div class=\"m-1 align-items-center ml-1\">
+        <a href=\"composemsg.php?orderID=".$row['orderID']."&userID=".$row['ouid']."\" type=\"button\" class=\"btn btn-primary ml-1\">
           Contact
-        </button>
-      </div>" : "<div class=\"m-1 align-items-center flex-row d-flex ml-1\">
-      <button type=\"button\" class=\"btn btn-primary ml-1\">
-        Contact
-      </button>
+        </a>
+      </div>
+      </div>" : "
+      <div class=\"d-flex\">
+        <div class=\"m-1 align-items-center d-flex ml-1\">
+        <a href=\"composemsg.php?orderID=".$row['orderID']."&userID=".$row['ouid']."\" type=\"button\" class=\"btn btn-primary ml-1\">
+          Contact
+        </a>
     </div>
-    <div class=\"m-1 align-items-center flex-row d-flex ml-1\">
-        <button type=\"button\" class=\"btn btn-primary ml-1\">
+    <div class=\"m-1 align-items-center d-flex ml-1\">
+        <button type=\"button\" class=\"btn btn-success ml-1\">
           Accept
         </button>
+      </div>
       </div>")."
     </td>
   </tr>");

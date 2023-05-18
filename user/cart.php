@@ -32,13 +32,13 @@
     $userResult = mysqli_query($db, $usersql);
     $userRow = mysqli_fetch_assoc($userResult);
     $userID = $userRow['userID'];
-    $sql = "SELECT cartID, 
+    $sql = "SELECT orderID, 
             products.productName as productName,
             products.productPrice as productPrice,
             products.productImg as productImg,
             users.username as username
-            from ((cart INNER JOIN users on cart.userID = users.userID)
-                  INNER JOIN products on cart.productID = products.productID)
+            from ((orders INNER JOIN users on orders.userID = users.userID)
+                  INNER JOIN products on orders.productID = products.productID)
                   where users.userID = '$userID'";
     $result = mysqli_query($db, $sql);
   }
@@ -125,7 +125,7 @@
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Cart</strong></div>
+          <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Orders</strong></div>
         </div>
       </div>
     </div>
@@ -144,7 +144,7 @@
                 <th class=\"product-price\">Price</th>
                 <th class=\"product-total\">Total</th>
                 <th class=\"product-remove\">Remove</th>
-                <th class=\"product-remove\">Checkout</th>
+                <th class=\"product-remove\">Message</th>
               </tr>
             </thead>";
           while ($row = mysqli_fetch_assoc($result)) {
@@ -159,8 +159,8 @@
             </td>
             <td>₱" . $row['productPrice'] . "</td>
             <td>₱149.00</td>
-            <td><a href=\"removecart.php?id=".$row['cartID']."\" class=\"btn btn-primary btn-sm\">X</a></td>
-            <td><a href=\"checkout.php?id=".$row['cartID']."\" class=\"btn btn-primary btn-sm\">Checkout</a></td>
+            <td><a href=\"removecart.php?id=".$row['orderID']."\" class=\"btn btn-primary btn-sm\">X</a></td>
+            <td><a href=\"composemsg.php?orderID=".$row['orderID']."\" class=\"btn btn-primary btn-sm\">Message</a></td>
           </tr>
         </tbody>");
           }

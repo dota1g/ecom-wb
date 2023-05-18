@@ -9,14 +9,39 @@ if (isset($_SESSION['login_user'])) {
   $userResult = mysqli_query($db, $usersql);
   $userRow = mysqli_fetch_assoc($userResult);
 } else {
-  header('Location:index.php');
+  header('Location:login.php');
 }
 
-$sql = "SELECT * from email where userID=".$userRow['userID']." and isFromAdmin = 1";
+$sql = "SELECT * from email where userID=" . $userRow['userID'] . "";
 $result = mysqli_query($db, $sql);
-$getUnreadMails = "SELECT * from email where userID=".$userRow['userID']." AND didUserReadMsg = 0 and isFromAdmin = 1";
+$getUnreadMails = "SELECT * from email where userID=" . $userRow['userID'] . " AND didUserReadMsg = 0";
 $resultxdd = mysqli_query($db, $getUnreadMails);
 $unreadMailsCount = mysqli_num_rows($resultxdd);
+
+function test_input($data)
+{
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $userID = $userRow['userID'];
+  $subject = test_input($_POST["subject"]);
+  $content = test_input($_POST["content"]);
+
+  if (isset($_POST['oID'])) {
+    $orderID = $_POST['oID'];
+    $emailsql = "INSERT into email (`userID`, `emailSubject`, `emailContent`, `orderID`) VALUES ('$userID','$subject','$content', '$orderID')";
+    $query = mysqli_query($db, $emailsql);
+    header('Location:inbox.php');
+  } else {
+    $emailsql = "INSERT into email (`userID`, `emailSubject`, `emailContent`) VALUES ('$userID','$subject','$content')";
+    $query = mysqli_query($db, $emailsql);
+    header('Location:inbox.php');
+  }
+}
 ?>
 
 <head>
@@ -71,28 +96,20 @@ $unreadMailsCount = mysqli_num_rows($resultxdd);
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
                 <ul>
-                <?php
+                  <?php
                   if (empty($_SESSION['login_user'])) {
-                    echo "<li><a href=\"login.php\" class=\"btn btn-secondary\">Log in</a></li>";
+                    echo "<li><a href=\"login.php\"><span class=\"icon icon-person\"></span></a></li>";
                   } else {
-                    echo "<li>Hello, <a href=\"login.php\">" . $userRow['firstName'] . "</a><a href=\"logout.php\">(Logout)</a></li>
-                    <li>
-                      <a href=\"inbox.php\" class=\"site-cart\">
-                        <span class=\"icon icon-envelope-o\"></span>
-                        " . ($unreadMailsCount > 0 ? "<span class=\"count\">" . $unreadMailsCount . "</span>" : "") . "
-                      </a>
-                    </li>
-                    <li>
-                    <a href=\"cart.php\" class=\"site-cart\">
-                      <span class=\"icon icon-shopping_cart\"></span>
-                      <span class=\"count\">2</span>
-                    </a>
-                  </li>
-                  <li>
-                </li>
-                    ";
+                    echo "<li>Hello, <a href=\"login.php\">" . $userRow['firstName'] . "</a><a href=\"logout.php\">(Logout)</a></li>";
                   }
                   ?>
+                  <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
+                  <li>
+                    <a href="cart.php" class="site-cart">
+                      <span class="icon icon-shopping_cart"></span>
+                      <span class="count">2</span>
+                    </a>
+                  </li>
                   <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
                 </ul>
               </div>
@@ -146,11 +163,11 @@ $unreadMailsCount = mysqli_num_rows($resultxdd);
                       <li class="nav-item active">
                         <a href="#" class="nav-link">
                           <i class="fas fa-inbox"></i> Inbox
-                          <?php if ($unreadMailsCount > 0){
-                            echo "<span class=\"count badge badge-primary float-right\">".$unreadMailsCount."</span>";
-                            } else{
-                              echo "";
-                            }?>
+                          <?php if ($unreadMailsCount > 0) {
+                            echo "<span class=\"count badge badge-primary float-right\">" . $unreadMailsCount . "</span>";
+                          } else {
+                            echo "";
+                          } ?>
                         </a>
                       </li>
                       <li class="nav-item">
@@ -175,114 +192,49 @@ $unreadMailsCount = mysqli_num_rows($resultxdd);
               <div class="col-md-9">
                 <div class="card card-primary card-outline">
                   <div class="card-header">
-                    <h3 class="card-title">Inbox</h3>
-                    <!-- /.card-tools -->
+                  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                    <h3 class="card-title">Compose New Message / Reply</h3>
                   </div>
                   <!-- /.card-header -->
-                  <div class="card-body p-0">
-                    <div class="mailbox-controls">
-                      <!-- Check all button -->
-                      <!-- <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
-                      </button>
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm">
-                          <i class="far fa-trash-alt"></i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm">
-                          <i class="fas fa-reply"></i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm">
-                          <i class="fas fa-share"></i>
-                        </button>
-                      </div> -->
-                      <!-- /.btn-group -->
-                      <!-- <button type="button" class="btn btn-default btn-sm">
-                        <i class="fas fa-sync-alt"></i>
-                      </button> -->
+                    <div class="card-body">
+                    <?php 
+                      if(isset($_GET['orderID'])){
+                        $ID = $_GET['orderID'];
+                        $getOrderDetails = "SELECT *, products.productName as productName FROM (orders INNER join products on products.productID = orders.productID) WHERE orderID = '$ID';";
+                        $orderResult = mysqli_query($db, $getOrderDetails);
+                        $itsfuckinrow = mysqli_fetch_assoc($orderResult);
+                        echo "<div class=\"alert alert-info\" role=\"alert\">
+                        You are messaging about this order: ".$itsfuckinrow['productName']."<br/>
+                        Ordered at ".$itsfuckinrow['dateOrdered']."
+                      </div>
+                      <div class=\"form-group\">
+                        Order ID
+                        <input class=\"form-control\" value=\"$ID\" name=\"oID\" readonly>
+                      </div>";
+                      }
+                      ?>
+                      <div class="form-group">
+                        <input class="form-control" placeholder="To: Admins" readonly>
+                      </div>
+                      <div class="form-group">
+                        <input class="form-control" placeholder="Subject:" name="subject">
+                      </div>
+                      <div class="form-group">
+                        <textarea id="compose-textarea" class="form-control" style="height: 300px" name="content">
+                        </textarea>
+                      </div>
+                      <div class="form-group">
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
                       <div class="float-right">
-                        1-50/<?php echo mysqli_num_rows($result)?>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-default btn-sm">
-                            <i class="fas fa-chevron-left"></i>
-                          </button>
-                          <button type="button" class="btn btn-default btn-sm">
-                            <i class="fas fa-chevron-right"></i>
-                          </button>
-                        </div>
-                        <!-- /.btn-group -->
+                        <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>
                       </div>
-                      <!-- /.float-right -->
+                      <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Discard</button>
                     </div>
-                    <div class="table-responsive mailbox-messages">
-                      <table class="table table-hover table-striped">
-                        <tbody>
-                          <?php
-                          while ($row = mysqli_fetch_assoc($result)) {
-                            $shortenedContent = substr(
-                              strval($row['emailContent']),
-                              0,
-                              50
-                            );
-                            echo (" <tr>
-                            <td>
-                              <div class=\"icheck-primar\">
-                              ".($row['didUserReadMsg'] == 0 ? "<span class=\"count badge badge-primary \">New</span>" : "" )."
-                                <label for=\"check1\"></label>
-                              </div>
-                            </td>
-                            <td class=\"mailbox-star\"><a href=\"\"><i class=\"fas fa-star text-warning\"></i></a></td>
-                            <td class=\"mailbox-name text-black\"><a href=\"markasread.php?id=".$row['emailID']."\">Admin</a></td>
-                            <td class=\"mailbox-subject ".($row['didUserReadMsg'] == 0 ? "text-black" : "" )."\"><b>" . $row['emailSubject'] . "</b> - " . $shortenedContent . " ...
-                            </td>
-                            <td class=\"mailbox-attachment\"></td>
-                            <td class=\"mailbox-date ".($row['didUserReadMsg'] == 0 ? "text-black" : "" )."\">" . $row['dateSent'] . "</td>
-                          </tr>");
-                          }
-
-                          ?>
-                        </tbody>
-                      </table>
-                      <!-- /.table -->
-                    </div>
-                    <!-- /.mail-box-messages -->
-                  </div>
-                  <!-- /.card-body -->
-                  <div class="card-footer p-0">
-                    <div class="mailbox-controls">
-                      <!-- Check all button -->
-                      <button type="button" class="btn btn-default btn-sm checkbox-toggle">
-                        <i class="far fa-square"></i>
-                      </button>
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm">
-                          <i class="far fa-trash-alt"></i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm">
-                          <i class="fas fa-reply"></i>
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm">
-                          <i class="fas fa-share"></i>
-                        </button>
-                      </div>
-                      <!-- /.btn-group -->
-                      <button type="button" class="btn btn-default btn-sm">
-                        <i class="fas fa-sync-alt"></i>
-                      </button>
-                      <div class="float-right">
-                        1-50/<?php echo mysqli_num_rows($result)?>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-default btn-sm">
-                            <i class="fas fa-chevron-left"></i>
-                          </button>
-                          <button type="button" class="btn btn-default btn-sm">
-                            <i class="fas fa-chevron-right"></i>
-                          </button>
-                        </div>
-                        <!-- /.btn-group -->
-                      </div>
-                      <!-- /.float-right -->
-                    </div>
-                  </div>
+                  </form>
+                  <!-- /.card-footer -->
                 </div>
                 <!-- /.card -->
               </div>
