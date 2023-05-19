@@ -125,33 +125,11 @@ $productresult = mysqli_query($db, $productsql);
           <div class="col-md-9 order-2">
 
             <div class="row">
-              <div class="col-md-12 mb-5">
-                <div class="float-md-left mb-4">
+              <div class="col-md-12 mb-2">
+                <div class="float-md-left mb-2">
                   <h2 class="text-black h5">Shop All</h2>
                 </div>
-                <div class="d-flex">
-                  <div class="dropdown mr-1 ml-md-auto">
-                    <button type="button" class="btn btn-secondary invisible btn-sm dropdown-toggle" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Latest
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                      <a class="dropdown-item" href="#">Graphic Design</a>
-                      <a class="dropdown-item" href="#">Illustrations</a>
-                      <a class="dropdown-item" href="#">UI/UX Design</a>
-                    </div>
-                  </div>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-secondary invisible btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Reference</button>
-                    <div class="dropdown-menu invisible" aria-labelledby="dropdownMenuReference">
-                      <a class="dropdown-item" href="#">Relevance</a>
-                      <a class="dropdown-item" href="#">Name, A to Z</a>
-                      <a class="dropdown-item" href="#">Name, Z to A</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Price, low to high</a>
-                      <a class="dropdown-item" href="#">Price, high to low</a>
-                    </div>
-                  </div>
-                </div>
+
               </div>
             </div>
             <div class="row mb-5">
@@ -179,28 +157,28 @@ $productresult = mysqli_query($db, $productsql);
 
           <div class="col-md-3 order-1 mb-5 mb-md-0">
             <div class="border p-4 rounded mb-4">
-              <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
+              <h3 class="mb-3 h6 text-uppercase text-black d-block">Ad space</h3>
               <ul class="list-unstyled mb-0">
-                <li class="mb-1"><a href="#" class="d-flex"><span>Graphic Design</span> <span class="text-black ml-auto">(2,220)</span></a></li>
-                <li class="mb-1"><a href="#" class="d-flex"><span>Illustrations</span> <span class="text-black ml-auto">(2,550)</span></a></li>
-                <li class="mb-1"><a href="#" class="d-flex"><span>UI/UX Design</span> <span class="text-black ml-auto">(2,124)</span></a></li>
+                <li class="mb-1 invisible"><a href="#" class="d-flex"><span>Graphic Design</span> <span class="text-black ml-auto">(2,220)</span></a></li>
+                <li class="mb-1 invisible"><a href="#" class="d-flex"><span>Illustrations</span> <span class="text-black ml-auto">(2,550)</span></a></li>
+                <li class="mb-1 invisible"><a href="#" class="d-flex"><span>UI/UX Design</span> <span class="text-black ml-auto">(2,124)</span></a></li>
               </ul>
             </div>
 
             <div class="border p-4 rounded mb-4">
               <div class="mb-4">
-                <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
-                <div id="slider-range" class="border-primary"></div>
-                <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white" disabled="" />
+                <h3 class="mb-3 h6 text-uppercase text-black d-block">Ad space but significantly bigger</h3>
+                <div id="slider-range invisible" class="border-primary "></div>
+                <input type="text" name="text" id="amount" class="form-control invisible border-0 pl-0 bg-white" disabled="" />
               </div>
 
               <div class="mb-4">
-                <h3 class="mb-3 h6 text-uppercase text-black d-block">Type</h3>
+                <h3 class="mb-3 h6 text-uppercase text-black d-block invisible">Type</h3>
                 <label for="s_sm" class="d-flex">
-                  <input type="checkbox" id="s_sm" class="mr-2 mt-1"> <span class="text-black">Personal</span>
+                  <input type="checkbox" id="s_sm" class="mr-2 mt-1 invisible"> <span class="text-black invisible">Personal</span>
                 </label>
                 <label for="s_md" class="d-flex">
-                  <input type="checkbox" id="s_md" class="mr-2 mt-1"> <span class="text-black">Commercial</span>
+                  <input type="checkbox" id="s_md" class="mr-2 mt-1 invisible"> <span class="text-black invisible">Commercial</span>
                 </label>
               </div>
             </div>
