@@ -12,9 +12,9 @@ if (isset($_SESSION['login_user'])) {
   header('Location:index.php');
 }
 
-$sql = "SELECT * from email where userID=".$userRow['userID']." and isFromAdmin = 1";
+$sql = "SELECT * from email where userID=".$userRow['userID']." and isFromAdmin = 1 order by dateSent desc";
 $result = mysqli_query($db, $sql);
-$getUnreadMails = "SELECT * from email where userID=".$userRow['userID']." AND didUserReadMsg = 0 and isFromAdmin = 1";
+$getUnreadMails = "SELECT * from email where userID=".$userRow['userID']." AND didUserReadMsg = 0 and isFromAdmin = 1 ";
 $resultxdd = mysqli_query($db, $getUnreadMails);
 $unreadMailsCount = mysqli_num_rows($resultxdd);
 ?>
@@ -52,7 +52,7 @@ $unreadMailsCount = mysqli_num_rows($resultxdd);
         <div class="container">
           <div class="row align-items-center">
 
-            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon invisible text-left">
               <form action="" class="site-block-top-search">
                 <span class="icon icon-search2"></span>
                 <input type="text" class="form-control border-0" placeholder="Search">
@@ -85,7 +85,6 @@ $unreadMailsCount = mysqli_num_rows($resultxdd);
                     <li>
                     <a href=\"cart.php\" class=\"site-cart\">
                       <span class=\"icon icon-shopping_cart\"></span>
-                      <span class=\"count\">2</span>
                     </a>
                   </li>
                   <li>
@@ -154,7 +153,7 @@ $unreadMailsCount = mysqli_num_rows($resultxdd);
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="sentmsgs.php" class="nav-link">
                           <i class="far fa-envelope"></i> Sent
                         </a>
                     </ul>

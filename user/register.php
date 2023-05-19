@@ -29,10 +29,6 @@
       }
     }
 
-    body {
-      background-image: url("../admin/images/bg.jpg");
-      background-size: cover;
-    }
   </style>
   <?php
   session_start();
@@ -92,14 +88,14 @@
 
     if ($success) {
       $sql = "INSERT INTO users (username, firstName, lastname, email, userpassword) 
-              VALUES('$regusern', '$fname', '$lname', '$email', '$regpass')";
+              VALUES('$regusern', '$fname', '$lname', '$email', sha2('$regpass', 256))";
       mysqli_query($db, $sql);
       $_SESSION['fname'] = $fname;
       $_SESSION['lname'] = $lname;
       $_SESSION['email'] = $email;
       $_SESSION['regusern'] = $regusern;
       $_SESSION['regpass'] = $regpass;
-      header('location:registerconfirm.php');
+      header('location:login.php');
       exit();
     }
   }

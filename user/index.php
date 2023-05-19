@@ -32,7 +32,7 @@
     $userResult = mysqli_query($db, $usersql);
     $userRow = mysqli_fetch_assoc($userResult);
 
-    $getUnreadMails = "SELECT * from email where userID=" . $userRow['userID'] . " AND didUserReadMsg = 0";
+    $getUnreadMails = "SELECT * from email where userID=" . $userRow['userID'] . " AND didUserReadMsg = 0 and isFromAdmin = 1";
     $resultxdd = mysqli_query($db, $getUnreadMails);
     $unreadMailsCount = mysqli_num_rows($resultxdd);
   }
@@ -65,27 +65,23 @@
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
                 <ul>
-                  <?php
+                <?php
                   if (empty($_SESSION['login_user'])) {
                     echo "<li><a href=\"login.php\" class=\"btn btn-secondary\">Log in</a></li>";
                   } else {
-                    echo "<li>Hello, <a href=\"login.php\">" . $userRow['firstName'] . "</a><a href=\"logout.php\">(Logout)</a></li>
+                    echo "<li>Hello, " . $userRow['firstName'] . " <a href=\"logout.php\">(Logout)</a></li>
                     <li>
                       <a href=\"inbox.php\" class=\"site-cart\">
                         <span class=\"icon icon-envelope-o\"></span>
-                        " . ($unreadMailsCount > 0 ? "<span class=\"count\">" . $unreadMailsCount . "</span>" : "") . "
+                        ".($unreadMailsCount > 0 ? "<span class=\"count\">".$unreadMailsCount."</span>" : "")."
                       </a>
                     </li>
                     <li>
                     <a href=\"cart.php\" class=\"site-cart\">
                       <span class=\"icon icon-shopping_cart\"></span>
-                      <span class=\"count\">2</span>
                     </a>
                   </li>
                   <li>
-                  <a href=\"cart.php\" class=\"site-cart\">
-                    <span class=\"icon icon-clipboard\"></span>
-                  </a>
                 </li>
                     ";
                   }
@@ -201,17 +197,17 @@
         <div class="container">
           <div class="row justify-content-center  mb-5">
             <div class="col-md-7 site-section-heading text-center pt-4">
-              <h2>We also offer bundles!</h2>
+              <h2>About us</h2>
             </div>
           </div>
           <div class="row align-items-center">
             <div class="col-md-12 col-lg-7 mb-5">
-              <a href="#"><img src="images/bill.jpg" alt="Image placeholder" class="img-fluid rounded"></a>
+              <a href="#"><video width="600" height="auto" controls><source src="../images/Act9_Baltazar_Berana_Tigue.mp4" type="video/mp4"></video></a>
             </div>
             <div class="col-md-12 col-lg-5 text-center pl-md-5">
-              <h2><a href="#">We also work on full blown projects!</a></h2>
-              <p>Includes printed flyers, billboards, Web UI/UX design, ad banners, company logo, and even the design for your company mascot!</p>
-              <p><a href="#" class="btn btn-primary btn-sm">Contact Sales</a></p>
+              <h2><a href="#">Boss-less company ever since!</a></h2>
+              <p>We are a team of skilled and creative graphic designers who work together to provide high-quality design services to our clients.</p>
+              <p><a href="composemsg.php" class="btn btn-primary btn-sm">Contact Us</a></p>
             </div>
           </div>
         </div>

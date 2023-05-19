@@ -1,34 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Windblume</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+<head>
+  <title>Windblume</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/magnific-popup.css">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
 
 
-    <link rel="stylesheet" href="css/aos.css">
+  <link rel="stylesheet" href="css/aos.css">
 
-    <link rel="stylesheet" href="css/style.css">
-    
-  </head>
-  <body>
-  
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+  <?php
+  session_start();
+  include("config.php");
+  if (isset($_SESSION['login_user'])) {
+    $user = $_SESSION['login_user'];
+    $usersql = "SELECT * from users where username ='$user' or email = '$user' limit 1";
+    $userResult = mysqli_query($db, $usersql);
+    $userRow = mysqli_fetch_assoc($userResult);
+
+    $getUnreadMails = "SELECT * from email where userID=" . $userRow['userID'] . " AND didUserReadMsg = 0 and isFromAdmin = 1";
+    $resultxdd = mysqli_query($db, $getUnreadMails);
+    $unreadMailsCount = mysqli_num_rows($resultxdd);
+  } ?>
+
   <div class="site-wrap">
     <header class="site-navbar" role="banner">
       <div class="site-navbar-top">
         <div class="container">
           <div class="row align-items-center">
 
-            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon invisible text-left">
               <form action="" class="site-block-top-search">
                 <span class="icon icon-search2"></span>
                 <input type="text" class="form-control border-0" placeholder="Search">
@@ -47,22 +62,35 @@
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
                 <ul>
-                  <li><a href="login.php"><span class="icon icon-person"></span></a></li>
-                  <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
-                  <li>
-                    <a href="cart.php" class="site-cart">
-                      <span class="icon icon-shopping_cart"></span>
-                      <span class="count">2</span>
+                <?php
+                  if (empty($_SESSION['login_user'])) {
+                    echo "<li><a href=\"login.php\" class=\"btn btn-secondary\">Log in</a></li>";
+                  } else {
+                    echo "<li>Hello, " . $userRow['firstName'] . " <a href=\"logout.php\">(Logout)</a></li>
+                    <li>
+                      <a href=\"inbox.php\" class=\"site-cart\">
+                        <span class=\"icon icon-envelope-o\"></span>
+                        ".($unreadMailsCount > 0 ? "<span class=\"count\">".$unreadMailsCount."</span>" : "")."
+                      </a>
+                    </li>
+                    <li>
+                    <a href=\"cart.php\" class=\"site-cart\">
+                      <span class=\"icon icon-shopping_cart\"></span>
                     </a>
-                  </li> 
+                  </li>
+                  <li>
+                </li>
+                    ";
+                  }
+                  ?>
                   <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
                 </ul>
-              </div> 
+              </div>
             </div>
 
           </div>
         </div>
-      </div> 
+      </div>
       <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
           <ul class="site-menu  d-none d-md-block">
@@ -103,7 +131,7 @@
           <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">About</strong></div>
         </div>
       </div>
-    </div>  
+    </div>
 
     <div class="site-section border-bottom" data-aos="fade">
       <div class="container">
@@ -118,21 +146,21 @@
           </div>
           <div class="col-md-1"></div>
           <div class="col-md-5">
-            
-            
+
+
             <div class="site-section-heading pt-3 mb-4">
               <h2 class="text-black">Boss-less company ever since!</h2>
             </div>
             <p>Welcome to Windblume!! We are a team of skilled and creative graphic designers who work together to provide high-quality design services to our clients. <br><br>
 
-As a cooperative company, we believe in the power of collaboration and cooperation to achieve our goals. Our team is made up of passionate individuals who are dedicated to helping our clients achieve their branding and marketing objectives.
+              As a cooperative company, we believe in the power of collaboration and cooperation to achieve our goals. Our team is made up of passionate individuals who are dedicated to helping our clients achieve their branding and marketing objectives.
 
-We offer a wide range of design services, including logo design, branding, marketing materials, website design, and more. Our team works closely with each client to understand their unique needs and goals, and we strive to deliver exceptional designs that exceed their expectations. <br> <br>
+              We offer a wide range of design services, including logo design, branding, marketing materials, website design, and more. Our team works closely with each client to understand their unique needs and goals, and we strive to deliver exceptional designs that exceed their expectations. <br> <br>
 
-At Windblume, we prioritize transparency, fairness, and inclusivity in all of our business practices. We believe that by working together and sharing resources, we can create a more sustainable and equitable future for our industry.
+              At Windblume, we prioritize transparency, fairness, and inclusivity in all of our business practices. We believe that by working together and sharing resources, we can create a more sustainable and equitable future for our industry.
 
-Thank you for choosing us for your design needs. We look forward to working with you and helping you achieve your branding and marketing goals!</p>
-            
+              Thank you for choosing us for your design needs. We look forward to working with you and helping you achieve your branding and marketing goals!</p>
+
           </div>
         </div>
       </div>
@@ -147,7 +175,7 @@ Thank you for choosing us for your design needs. We look forward to working with
         </div>
         <div class="row">
           <div class="col-md-6 col-lg-3">
-  
+
             <div class="block-38 text-center">
               <div class="block-38-img">
                 <div class="block-38-header">
@@ -172,7 +200,7 @@ Thank you for choosing us for your design needs. We look forward to working with
                 <div class="block-38-body">
                   <p>Meet Rosalyne, a talented artist and designer with a unique skill set that blends their passion for anime-style fan arts with their expertise in UI/UX design. With over 15 years of experience in both fields, Rosalyne has developed a distinct style that seamlessly merges the vibrant, expressive world of anime with the sleek, intuitive design of modern interfaces. <br>
 
-From a young age, Rosalyne was drawn to the captivating visuals and rich storytelling of anime, and began honing their artistic skills by creating fan art inspired by their favorite series. Over time, they also developed a fascination with the world of UI/UX design, recognizing the potential of design to improve the user experience and make technology more accessible and intuitive. </p>
+                    From a young age, Rosalyne was drawn to the captivating visuals and rich storytelling of anime, and began honing their artistic skills by creating fan art inspired by their favorite series. Over time, they also developed a fascination with the world of UI/UX design, recognizing the potential of design to improve the user experience and make technology more accessible and intuitive. </p>
                 </div>
               </div>
             </div>
@@ -208,7 +236,7 @@ From a young age, Rosalyne was drawn to the captivating visuals and rich storyte
       </div>
     </div>
 
-    
+
     <footer class="site-footer border-top">
       <div class="container">
         <div class="row">
@@ -270,12 +298,15 @@ From a young age, Rosalyne was drawn to the captivating visuals and rich storyte
         <div class="row pt-5 mt-5 text-center">
           <div class="col-md-12">
             <p>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+              <script>
+                document.write(new Date().getFullYear());
+              </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>
-          
+
         </div>
       </div>
     </footer>
@@ -290,6 +321,7 @@ From a young age, Rosalyne was drawn to the captivating visuals and rich storyte
   <script src="js/aos.js"></script>
 
   <script src="js/main.js"></script>
-    
-  </body>
+
+</body>
+
 </html>

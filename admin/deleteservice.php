@@ -251,7 +251,7 @@ $orderCount = mysqli_num_rows($resultorders);
                     <p>Messages</p>
                   </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item invisible">
                   <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>Reviews</p>
@@ -291,19 +291,11 @@ $orderCount = mysqli_num_rows($resultorders);
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
       <div class="content-header">
-        <p class="text-center h1 mb-0">Search</p><br>
+        <p class="text-center h1 mb-0">All Products</p><br>
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-8 offset-md-2">
               <form action="simple-results.php">
-                <div class="input-group input-group-lg">
-                  <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here" value="fanart">
-                  <div class="input-group-append">
-                    <button type="submit" class="btn btn-lg btn-default">
-                      <i class="fa fa-search"></i>
-                    </button>
-                  </div>
-                </div>
               </form>
             </div>
           </div>

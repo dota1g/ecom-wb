@@ -8,6 +8,10 @@ if (isset($_SESSION['login_user'])) {
   $usersql = "SELECT * from users where username ='$user' or email = '$user' limit 1";
   $userResult = mysqli_query($db, $usersql);
   $userRow = mysqli_fetch_assoc($userResult);
+
+  $getUnreadMails = "SELECT * from email where userID=" . $userRow['userID'] . " AND didUserReadMsg = 0 and isFromAdmin = 1";
+  $resultxdd = mysqli_query($db, $getUnreadMails);
+  $unreadMailsCount = mysqli_num_rows($resultxdd);
 }
 
 $productID = $_GET['id'];
@@ -66,23 +70,25 @@ $row = mysqli_fetch_assoc($result)
                 <ul>
                 <?php
                   if (empty($_SESSION['login_user'])) {
-                    echo "<li><a href=\"login.php\"><span class=\"icon icon-person\"></span></a></li>";
+                    echo "<li><a href=\"login.php\" class=\"btn btn-secondary\">Log in</a></li>";
                   } else {
-                    echo "<li>Hello, <a href=\"login.php\">" . $userRow['firstName'] . "</a><a href=\"logout.php\">(Logout)</a></li>";
+                    echo "<li>Hello, " . $userRow['firstName'] . " <a href=\"logout.php\">(Logout)</a></li>
+                    <li>
+                      <a href=\"inbox.php\" class=\"site-cart\">
+                        <span class=\"icon icon-envelope-o\"></span>
+                        ".($unreadMailsCount > 0 ? "<span class=\"count\">".$unreadMailsCount."</span>" : "")."
+                      </a>
+                    </li>
+                    <li>
+                    <a href=\"cart.php\" class=\"site-cart\">
+                      <span class=\"icon icon-shopping_cart\"></span>
+                    </a>
+                  </li>
+                  <li>
+                </li>
+                    ";
                   }
                   ?>
-                  <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
-                  <li>
-                    <a href="cart.html" class="site-cart">
-                      <span class="icon icon-shopping_cart"></span>
-                      <span class="count">2</span>
-                    </a>
-                  </li>
-                  <a href="cart.html" class="site-cart">
-                      <span class="icon icon-history"></span>
-                      <span class="count">2</span>
-                    </a>
-                  </li>
                   <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
                 </ul>
               </div>
@@ -95,12 +101,12 @@ $row = mysqli_fetch_assoc($result)
         <div class="container">
           <ul class="site-menu  d-none d-md-block">
             <li>
-              <a href="index.html">Home</a>
+              <a href="index.php">Home</a>
             </li>
             <li>
-              <a href="about.html">About</a>
+              <a href="about.php">About</a>
             </li>
-            <li class="active"><a href="shop.html">Shop</a></li>
+            <li class="active"><a href="shop.php">Shop</a></li>
             <li><a href="composemsg.php">Contact</a></li>
           </ul>
         </div>
@@ -110,15 +116,15 @@ $row = mysqli_fetch_assoc($result)
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black"><?php echo $row['productName'] ?></strong></div>
+          <div class="col-md-12 mb-0"><a href="index.php">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black"><?php echo $row['productName'] ?></strong></div>
         </div>
       </div>
     </div>
 
     <div class="site-section">
       <div class="container">
-        <div class="alert alert-danger text-center" role="alert">
-          Please contact one of our artists / graphic designer before placing an order to determine the complexity and price of your desired project.
+        <div class="alert alert-secondary text-center" role="alert">
+          <b>Recommended for image manipulation requests:</b> Please use Google Drive or Imgur to link images you want us to work with to avoid quality loss.
         </div>
         <div class="row">
           <div class="col-md-6 ">

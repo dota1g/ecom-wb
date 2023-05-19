@@ -40,8 +40,8 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $cardNo = $_POST['cardNo'];
       $prodID = $_POST['productID'];
-      $MCregex = "^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$^";
-      $visaregex = "^4[0-9]{12}(?:[0-9]{3})?$^";
+      $MCregex = "/^5[1-5]\\d{14}$/";
+      $visaregex = "/^4\\d{12}(\\d{3})?$/";
 
       if (preg_match($MCregex, $cardNo) || preg_match($visaregex, $cardNo)) {
         header('Location:addtocartsql.php?id=' . $prodID);
@@ -344,17 +344,17 @@
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                       <div class="collapse" id="collapsepaypal">
                         <div class="py-2">
-                          <input type="number" class="form-control invisible" id="validationServer01" name="productID" value="<?= $productRow['productID'] ?>" pattern="^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$^" maxlength="16" required>
+                          <input type="number" class="form-control invisible" id="validationServer01" name="productID" value="<?= $productRow['productID'] ?>"  maxlength="16" required>
                           <label for="validationServer01" class="form-label">Card number</label>
-                          <input type="text" class="form-control" id="validationServer01" name="cardNo" pattern="^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$^" maxlength="16" required>
+                          <input type="text" class="form-control" id="validationServer01" name="cardNo" maxlength="16" required>
                         </div>
                         <div class="py-2">
                           <label for="validationServer01" class="form-label">CVV</label>
-                          <input type="text" class="form-control" id="validationServer01" name="cardNo" pattern="^[0-9]{3,4}$^" maxlength="3" required>
+                          <input type="password" class="form-control" id="validationServer01" name="x" pattern="[0-9]{3,4}" maxlength="3" required>
                         </div>
                         <div class="py-2">
                           <label for="validationServer01" class="form-label">Expiry</label>
-                          <input type="text" class="form-control" id="validationServer01" name="cardNo" pattern="^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$^" maxlength="3" required>
+                          <input type="text" class="form-control" id="validationServer01" name="y" pattern="(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})" maxlength="7" required>
                         </div>
                       </div>
                   </div>

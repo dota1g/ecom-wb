@@ -15,10 +15,6 @@
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <style>
-    body{
-        background-image: url("images/bg.jpg");
-        background-size: cover;
-    }
 </style>
 
 <?php
@@ -40,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $myuser = mysqli_real_escape_string($db, $user);
   $mypass = mysqli_real_escape_string($db, $pass);
-  $sql = "SELECT * FROM admins WHERE (username = '$myuser' OR email='$myuser') and adminPassword = '$mypass' limit 1";
+  $sql = "SELECT * FROM admins WHERE (username = '$myuser' OR email='$myuser') and adminPassword = sha2('$mypass',256) limit 1";
   $result = mysqli_query($db, $sql);
   $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
@@ -85,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="row">
           <div class="col-8">
-            <div class="icheck-primary">
+            <div class="icheck-primary invisible">
               <input type="checkbox" id="remember">
               <label for="remember">
                 Remember Me

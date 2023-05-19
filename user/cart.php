@@ -36,11 +36,17 @@
             products.productName as productName,
             products.productPrice as productPrice,
             products.productImg as productImg,
+            orderStatus,
+            dateOrdered,
             users.username as username
             from ((orders INNER JOIN users on orders.userID = users.userID)
                   INNER JOIN products on orders.productID = products.productID)
-                  where users.userID = '$userID'";
+                  where users.userID = '$userID' order by dateOrdered desc";
     $result = mysqli_query($db, $sql);
+
+    $getUnreadMails = "SELECT * from email where userID=" . $userRow['userID'] . " AND didUserReadMsg = 0 and isFromAdmin = 1";
+    $resultxdd = mysqli_query($db, $getUnreadMails);
+    $unreadMailsCount = mysqli_num_rows($resultxdd);
   }
 
   ?>
@@ -72,15 +78,27 @@
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
                 <ul>
-                  <li><a href="login.php"><span class="icon icon-person"></span></a></li>
-                  <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
-                  <li>
-                    <a href="cart.php" class="site-cart">
-                      <span class="icon icon-shopping_cart"></span>
-                      <span class="count">2</span>
+              <?php
+                  if (empty($_SESSION['login_user'])) {
+                    echo "<li><a href=\"login.php\" class=\"btn btn-secondary\">Log in</a></li>";
+                  } else {
+                    echo "<li>Hello, " . $userRow['firstName'] . " <a href=\"logout.php\">(Logout)</a></li>
+                    <li>
+                      <a href=\"inbox.php\" class=\"site-cart\">
+                        <span class=\"icon icon-envelope-o\"></span>
+                        ".($unreadMailsCount > 0 ? "<span class=\"count\">".$unreadMailsCount."</span>" : "")."
+                      </a>
+                    </li>
+                    <li>
+                    <a href=\"cart.php\" class=\"site-cart\">
+                      <span class=\"icon icon-shopping_cart\"></span>
                     </a>
                   </li>
-                  <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
+                  <li>
+                </li>
+                    ";
+                  }
+                  ?>
                 </ul>
               </div>
             </div>
@@ -142,13 +160,13 @@
                 <th class=\"product-thumbnail\">Image</th>
                 <th class=\"product-name\">Product</th>
                 <th class=\"product-price\">Price</th>
-                <th class=\"product-total\">Total</th>
-                <th class=\"product-remove\">Remove</th>
-                <th class=\"product-remove\">Message</th>
+                <th class=\"product-total\">Date Ordered</th>
+                <th class=\"product-remove\">Status</th>
+                <th class=\"product-remove\">Actions</th>
               </tr>
             </thead>";
           while ($row = mysqli_fetch_assoc($result)) {
-            echo ("
+            echo "
         <tbody>
           <tr>
             <td class=\"product-thumbnail\">
@@ -158,11 +176,26 @@
               <h2 class=\"h5 text-black\">" . $row['productName'] . "</h2>
             </td>
             <td>₱" . $row['productPrice'] . "</td>
-            <td>₱149.00</td>
-            <td><a href=\"removecart.php?id=".$row['orderID']."\" class=\"btn btn-primary btn-sm\">X</a></td>
-            <td><a href=\"composemsg.php?orderID=".$row['orderID']."\" class=\"btn btn-primary btn-sm\">Message</a></td>
-          </tr>
-        </tbody>");
+            <td>" . $row['dateOrdered'] . "</td>";
+            if ($row['orderStatus'] == 0) {
+              echo "<td> Pending </td>";
+            } else if ($row['orderStatus'] == 1) {
+              echo " <td class=\"text-primary\"> Negotiation ongoing </td>";
+            } else if ($row['orderStatus'] == 2) {
+              echo "<td class=\"text-success\"> Work in progress </td>";
+            } else if ($row['orderStatus'] == 3) {
+              echo "<td class=\"text-success\"> Completed </td>";
+            } else if ($row['orderStatus'] == 4) {
+              echo "<td class=\"text-danger\" title=\"Cancelled orders are automatically refunded.\"> Cancelled &#x1F6C8  </td>";
+            }
+            if ($row['orderStatus'] == 3 || $row['orderStatus'] == 4){
+            echo "<td><a href=\"composemsg.php?orderID=".$row['orderID']."\" class=\"btn btn-primary disabled btn-sm\">Message</a></td>";
+            } else {
+              echo "<td><a href=\"composemsg.php?orderID=".$row['orderID']."\" class=\"btn btn-primary btn-sm\">Message</a>
+              <a href=\"denyordersql.php?id=".$row['orderID']."\" class=\"btn btn-danger btn-sm\">Cancel</a></td>";
+            }
+          echo "</tr>
+        </tbody>";
           }
           echo "</table>
           </div>
@@ -173,14 +206,11 @@
         <div class="row">
           <div class="col-md-6">
             <div class="row mb-5">
-              <div class="col-md-6 mb-3 mb-md-0">
-                <button class="btn btn-primary btn-sm btn-block">Update Cart</button>
-              </div>
               <div class="col-md-6">
-                <button class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</button>
+                <a href="shop.php" class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</a>
               </div>
             </div>
-            <div class="row">
+            <div class="row invisible">
               <div class="col-md-12">
                 <label class="text-black h4" for="coupon">Coupon</label>
                 <p>Enter your coupon code if you have one.</p>
@@ -193,7 +223,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6 pl-5">
+          <div class="col-md-6 pl-5 invisible">
             <div class="row justify-content-end">
               <div class="col-md-7">
                 <div class="row">

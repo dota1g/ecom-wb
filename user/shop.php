@@ -30,7 +30,7 @@ if (isset($_SESSION['login_user'])) {
   $userResult = mysqli_query($db, $usersql);
   $userRow = mysqli_fetch_assoc($userResult);
 
-  $getUnreadMails = "SELECT * from email where userID=" . $userRow['userID'] . " AND didUserReadMsg = 0";
+  $getUnreadMails = "SELECT * from email where userID=" . $userRow['userID'] . " AND didUserReadMsg = 0 and isFromAdmin = 1";
   $resultxdd = mysqli_query($db, $getUnreadMails);
   $unreadMailsCount = mysqli_num_rows($resultxdd);
 }
@@ -64,12 +64,12 @@ $productresult = mysqli_query($db, $productsql);
 
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
-                <ul>
-                  <?php
+              <ul>
+              <?php
                   if (empty($_SESSION['login_user'])) {
                     echo "<li><a href=\"login.php\" class=\"btn btn-secondary\">Log in</a></li>";
                   } else {
-                    echo "<li>Hello, <a href=\"login.php\">" . $userRow['firstName'] . "</a><a href=\"logout.php\">(Logout)</a></li>
+                    echo "<li>Hello, " . $userRow['firstName'] . " <a href=\"logout.php\">(Logout)</a></li>
                     <li>
                       <a href=\"inbox.php\" class=\"site-cart\">
                         <span class=\"icon icon-envelope-o\"></span>
@@ -79,13 +79,9 @@ $productresult = mysqli_query($db, $productsql);
                     <li>
                     <a href=\"cart.php\" class=\"site-cart\">
                       <span class=\"icon icon-shopping_cart\"></span>
-                      <span class=\"count\">2</span>
                     </a>
                   </li>
                   <li>
-                  <a href=\"cart.php\" class=\"site-cart\">
-                    <span class=\"icon icon-clipboard\"></span>
-                  </a>
                 </li>
                     ";
                   }
@@ -171,6 +167,7 @@ $productresult = mysqli_query($db, $productsql);
                         <h5 class=\"text-center\"><a href=\"shop-single.php?id=" . $row['productID'] . "\">" . $row['productName'] . "</a></h5>
                         <p class=\"mb-0 block-4 text-center\">" . $row['productShortDesc'] . "</p>
                         <p class=\"text-primary text-center font-weight-bold\">>₱" . $row['productPrice'] . "</p>
+                        ".($row['isProductAvailable'] == 1 ? "" : "<p class=\"alert-danger text-center\">Not available</p>")."
                     </div>
                 </div>
                 </div>";

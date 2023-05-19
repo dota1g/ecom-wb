@@ -305,7 +305,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <p>Messages</p>
                     </a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item invisible">
                     <a href="reviews.php" class="nav-link">
                       <i class="nav-icon fas fa-th"></i>
                       <p>Reviews</p>
@@ -362,7 +362,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <section class="content">
           <div class="row">
             <div class="col-md-3">
-              <a href="compose.php" class="btn btn-primary btn-block mb-3">Compose</a>
+              <a href="compose.php" class="btn btn-primary invisible btn-block mb-3">Compose</a>
     
               <div class="card">
                 <div class="card-header">
@@ -379,7 +379,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <li class="nav-item active">
                       <a href="#" class="nav-link">
                         <i class="fas fa-inbox"></i> Inbox
-                        <span class="badge bg-primary float-right">12</span>
                       </a>
                     </li>
                     <li class="nav-item">

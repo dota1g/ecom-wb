@@ -260,7 +260,7 @@ $resultorders = mysqli_query($db, $joinTheseStupidTables);
                     <p>Messages</p>
                   </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item invisible">
                   <a href="reviews.php" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>Reviews</p>
@@ -282,7 +282,7 @@ $resultorders = mysqli_query($db, $joinTheseStupidTables);
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="deleteservice.php" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>View/Edit/Delete a service</p>
               </a>
@@ -319,80 +319,107 @@ $resultorders = mysqli_query($db, $joinTheseStupidTables);
                   </tr>
                 </thead>
                 <tbody>
-                <?php
-while($row = mysqli_fetch_assoc($resultorders)){
+                  <?php
+                  while ($row = mysqli_fetch_assoc($resultorders)) {
 
-    echo (" <tr data-widget=\"expandable-table text-center\" aria-expanded=\"false\">
-    <td>".$row['orderID']."</td>
-    <td>".$row['firstName']." ".$row['lastname']."</td>
-    <td>".$row['dateOrdered']."</td>
-    <td>".$row['productName']."</td>
-    <td>₱".$row['price']."</td>
-    <td>".($row['orderStatus'] == 1 ? "Work in progress" : "Pending")."</td>
-    <td>".($row['orderStatus'] == 1 ?
-      "<div class=\"d-flex\">
-      <div class=\"m-1 align-items-center ml-1\">
-        <a href=\"composemsg.php?orderID=".$row['orderID']."&userID=".$row['ouid']."\" type=\"button\" class=\"btn btn-primary ml-1\">
-          Contact
-        </a>
-      </div>
-      </div>" : "
-      <div class=\"d-flex\">
-        <div class=\"m-1 align-items-center d-flex ml-1\">
-        <a href=\"composemsg.php?orderID=".$row['orderID']."&userID=".$row['ouid']."\" type=\"button\" class=\"btn btn-primary ml-1\">
-          Contact
-        </a>
-    </div>
-    <div class=\"m-1 align-items-center d-flex ml-1\">
-        <button type=\"button\" class=\"btn btn-success ml-1\">
-          Accept
-        </button>
-      </div>
-      </div>")."
-    </td>
-  </tr>");
-}
-?>
-                  <tr class="expandable-body">
-                    <td colspan="5"></td>
-                  </tr>
-                  <tr data-widget="expandable-table" aria-expanded="true">
-                    <td>183</td>
-                    <td>Lumine</td>
-                    <td>11-7-2022</td>
-                    <td>Minimalist Logo</td>
-                    <td>₱1499</td>
-                    <td>Pending</td>
-                    <td>
-                      <div class="m-1 align-items-center flex-row d-flex ml-1">
-                        <button type="button" class="btn btn-primary ml-1">
+                    echo " <tr data-widget=\"expandable-table text-center\" aria-expanded=\"false\">
+                        <td>" . $row['orderID'] . "</td>
+                        <td>" . $row['firstName'] . " " . $row['lastname'] . "</td>
+                        <td>" . $row['dateOrdered'] . "</td>
+                        <td>" . $row['productName'] . "</td>
+                        <td>₱" . $row['price'] . "</td>";
+                    if ($row['orderStatus'] == 0) {
+                      echo "<td> Pending </td>";
+                    } else if ($row['orderStatus'] == 1) {
+                      echo " <td> Negotiation ongoing </td>";
+                    } else if ($row['orderStatus'] == 2) {
+                      echo "<td> Work in progress </td>";
+                    } else if ($row['orderStatus'] == 3) {
+                      echo "<td> Completed </td>";
+                    } else if ($row['orderStatus'] == 4) {
+                      echo "<td> Cancelled </td>";
+                    }
+                    if ($row['orderStatus'] == 0) {
+                      echo "<td> <div class=\"d-flex flex-row\">
+                      <div class=\"m-1 align-items-center ml-1\">
+                        <a href=\"composemsg.php?orderID=".$row['orderID']."&userID=".$row['ouid']."\" type=\"button\" class=\"btn btn-primary ml-1\">
                           Contact
-                        </button>
-                        <button type="button" class="btn btn-success ml-1">
-                          Approve
-                        </button>
-                        <button type="button" class="btn btn-danger ml-1">
-                          Deny
-                        </button>
+                        </a>
                       </div>
-                    </td>
-                  </tr>
-                  <tr class="expandable-body">
-                    <td colspan="5"></td>
-                  </tr>
-                  <tr data-widget="expandable-table" aria-expanded="true">
-                    <td>183</td>
-                    <td>Anomaly</td>
-                    <td>11-7-2022</td>
-                    <td>Minimalist Logo</td>
-                    <td>₱1499</td>
-                    <td>Denied</td>
-                    <td>N/A</td>
-                  </tr>
-                  <tr class="expandable-body">
-                    <td colspan="5"></td>
-                  </tr>
-                  <tr data-widget="expandable-table" aria-expanded="false"></tr>
+                      <div class=\"m-1 align-items-center ml-1\">
+                      <a href=\"denyordersql.php?id=".$row['orderID']."\" type=\"button\" class=\"btn btn-danger ml-1\">
+                        Reject
+                      </a>
+                    </div>
+                    </div>
+                      </td>";
+                    } else if ($row['orderStatus'] == 1) {
+                      echo " <td class=\"text-center\"> <div class=\"d-flex flex-row\">
+                      <div class=\"m-1 align-items-center ml-1\">
+                        <a href=\"composemsg.php?orderID=".$row['orderID']."&userID=".$row['ouid']."\" type=\"button\" class=\"btn btn-primary ml-1\">
+                          Contact
+                        </a>
+                      </div>
+                      <div class=\"m-1 align-items-center ml-1\">
+                      <a href=\"markasWIPsql.php?id=".$row['orderID']."\" type=\"button\" class=\"btn btn-success ml-1\">
+                        Accept
+                      </a>
+                    </div>
+                      <div class=\"m-1 align-items-center ml-1\">
+                      <a href=\"denyordersql.php?id=".$row['orderID']."\" type=\"button\" class=\"btn btn-danger ml-1\">
+                        Reject
+                      </a>
+                    </div>
+                    </div>
+                      </td>";
+                    } else if ($row['orderStatus'] == 2) {
+                      echo "<td class=\"text-center\">  <div class=\"d-flex flex-row\">
+                      <div class=\"m-1 align-items-center ml-1\">
+                        <a href=\"composemsg.php?orderID=".$row['orderID']."&userID=".$row['ouid']."\" type=\"button\" class=\"btn btn-primary ml-1\">
+                          Contact
+                        </a>
+                      </div>
+                      <div class=\"m-1 align-items-center ml-1\">
+                      <a href=\"markascompletedsql.php?id=".$row['orderID']."\" type=\"button\" class=\"btn btn-success ml-1\">
+                        Completed
+                      </a>
+                    </div>
+                      <div class=\"m-1 align-items-center ml-1\">
+                      <a href=\"denyordersql.php?id=".$row['orderID']."\" type=\"button\" class=\"btn btn-danger ml-1\">
+                        Cancel
+                      </a>
+                    </div>
+                    </div>
+                      </td>";
+                    } else if ($row['orderStatus'] == 3) {
+                      echo "<td class=\"text-center\"> N/A </td>";
+                    } else if ($row['orderStatus'] == 4) {
+                      echo "<td class=\"text-center\"> N/A </td>";
+                    }
+                    //   <td>".($row['orderStatus'] == 1 ?
+                        // "<div class=\"d-flex\">
+                        // <div class=\"m-1 align-items-center ml-1\">
+                        //   <a href=\"composemsg.php?orderID=".$row['orderID']."&userID=".$row['ouid']."\" type=\"button\" class=\"btn btn-primary ml-1\">
+                        //     Contact
+                        //   </a>
+                        // </div>
+                        // </div>" : "
+                    //     <div class=\"d-flex\">
+                    //       <div class=\"m-1 align-items-center d-flex ml-1\">
+                    //       <a href=\"composemsg.php?orderID=".$row['orderID']."&userID=".$row['ouid']."\" type=\"button\" class=\"btn btn-primary ml-1\">
+                    //         Contact
+                    //       </a>
+                    //   </div>
+                    //   <div class=\"m-1 align-items-center d-flex ml-1\">
+                    //       <button type=\"button\" class=\"btn btn-success ml-1\">
+                    //         Accept
+                    //       </button>
+                    //     </div>
+                    //     </div>")."
+                    //   </td>
+                    // </tr>");
+                  }
+                  ?>
                 </tbody>
               </table>
             </div>

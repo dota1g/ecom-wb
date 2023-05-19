@@ -14,7 +14,7 @@ if (isset($_SESSION['login_user'])) {
 
 $sql = "SELECT * from email where userID=" . $userRow['userID'] . "";
 $result = mysqli_query($db, $sql);
-$getUnreadMails = "SELECT * from email where userID=" . $userRow['userID'] . " AND didUserReadMsg = 0";
+$getUnreadMails = "SELECT * from email where userID=" . $userRow['userID'] . " AND didUserReadMsg = 0 and isFromAdmin = 1";
 $resultxdd = mysqli_query($db, $getUnreadMails);
 $unreadMailsCount = mysqli_num_rows($resultxdd);
 
@@ -61,7 +61,7 @@ if ($emailRow['userID'] != $userRow['userID']) {
         <div class="container">
           <div class="row align-items-center">
 
-            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon invisible text-left">
               <form action="" class="site-block-top-search">
                 <span class="icon icon-search2"></span>
                 <input type="text" class="form-control border-0" placeholder="Search">
@@ -80,20 +80,27 @@ if ($emailRow['userID'] != $userRow['userID']) {
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">
                 <ul>
-                  <?php
+                <?php
                   if (empty($_SESSION['login_user'])) {
-                    echo "<li><a href=\"login.php\"><span class=\"icon icon-person\"></span></a></li>";
+                    echo "<li><a href=\"login.php\" class=\"btn btn-secondary\">Log in</a></li>";
                   } else {
-                    echo "<li>Hello, <a href=\"login.php\">" . $userRow['firstName'] . "</a><a href=\"logout.php\">(Logout)</a></li>";
-                  }
-                  ?>
-                  <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
-                  <li>
-                    <a href="cart.php" class="site-cart">
-                      <span class="icon icon-shopping_cart"></span>
-                      <span class="count">2</span>
+                    echo "<li>Hello, " . $userRow['firstName'] . " <a href=\"logout.php\">(Logout)</a></li>
+                    <li>
+                      <a href=\"inbox.php\" class=\"site-cart\">
+                        <span class=\"icon icon-envelope-o\"></span>
+                        ".($unreadMailsCount > 0 ? "<span class=\"count\">".$unreadMailsCount."</span>" : "")."
+                      </a>
+                    </li>
+                    <li>
+                    <a href=\"cart.php\" class=\"site-cart\">
+                      <span class=\"icon icon-shopping_cart\"></span>
                     </a>
                   </li>
+                  <li>
+                </li>
+                    ";
+                  }
+                  ?>
                   <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
                 </ul>
               </div>

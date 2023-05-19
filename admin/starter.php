@@ -250,7 +250,7 @@ $orderCount = mysqli_num_rows($resultorders);
                     <p>Messages</p>
                   </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item invisible">
                   <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>Reviews</p>
@@ -320,12 +320,12 @@ $orderCount = mysqli_num_rows($resultorders);
                 <div class="inner">
                   <h3><?= $orderCount?></h3>
 
-                  <p>New Order(s)</p>
+                  <p>All Order(s)</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-bag"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="pending-orders.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -355,7 +355,7 @@ $orderCount = mysqli_num_rows($resultorders);
                 <div class="icon">
                   <i class="ion ion-person-add"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="deleteservice.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->

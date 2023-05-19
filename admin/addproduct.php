@@ -349,7 +349,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <p>Messages</p>
                   </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item invisible">
                   <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>Reviews</p>

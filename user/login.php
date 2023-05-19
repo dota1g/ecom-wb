@@ -30,11 +30,6 @@
         font-size: 3.5rem;
       }
     }
-
-    body {
-      background-image: url("../admin/images/bg.jpg");
-      background-size: cover;
-    }
   </style>
 
 
@@ -60,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $myuser = mysqli_real_escape_string($db, $user);
   $mypass = mysqli_real_escape_string($db, $pass);
-  $sql = "SELECT * FROM users WHERE (username = '$myuser' OR email='$myuser') and userPassword = '$mypass' limit 1";
+  $sql = "SELECT * FROM users WHERE (username = '$myuser' OR email='$myuser') and userPassword = sha2('$mypass', 256) limit 1";
   $result = mysqli_query($db, $sql);
   $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
@@ -95,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="floatingPassword">Password</label>
       </div>
 
-      <div class="checkbox mb-3">
+      <div class="checkbox invisible mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Remember me
         </label>
